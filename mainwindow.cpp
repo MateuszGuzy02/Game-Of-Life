@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     setupTable();  // Inicjalizacja tabeli
 
-    connect(ui->stepButton, &QPushButton::clicked, &game, &GameOfLife::onStepButtonClicked);
+    connect(ui->stepButton, &QPushButton::clicked, &game, &GameOfLife::displayBoard);
 }
 
 MainWindow::~MainWindow()
@@ -40,25 +40,13 @@ void MainWindow::setupTable() {
 }
 
 void MainWindow::updateTable() {
-    const auto& cells = game.getBoard().getCells();
-
-    for (int i = 0; i < game.getBoard().getHeight(); ++i) {
-        for (int j = 0; j < game.getBoard().getWidth(); ++j) {
-            QTableWidgetItem* item = ui->gameTable->item(i, j);
-            if (item) {
-                item->setBackground(cells[i][j] ? Qt::blue : Qt::white);
-            }
-        }
-    }
-
-    // Przerysowanie tabeli
+    game.getBoard().printBoard(ui->gameTable);
     ui->gameTable->viewport()->update();
 }
 
 void MainWindow::on_stepButton_clicked()
 {
-    game.onStepButtonClicked();
+    game.displayBoard();
     updateTable();
-    game.resetStepButtonState();
 }
 

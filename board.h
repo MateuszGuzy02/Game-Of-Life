@@ -1,6 +1,7 @@
 #ifndef BOARD_H
 #define BOARD_H
 #include <vector>
+#include <QTableWidget>
 
 class Board {
 private:
@@ -16,13 +17,13 @@ public:
     int getWidth() const { return width; }
     int getHeight() const { return height; }
     int& getCell(int x, int y) { return cells[x][y]; }
-    std::vector<std::vector<int>>& getCells() { return cells; }
+    const std::vector<std::vector<int>>& getCells() const { return cells; }
 
     void initializeBoard();
     void initializeBoardWithSeed(unsigned int seed);
     void resizeBoard(int newWidth, int newHeight);
     void nextGeneration();
-    void printBoard() const;
+    void printBoard(QTableWidget* tableWidget) const;
     void clear();
 
     int countAliveNeighbors(int x, int y) const;

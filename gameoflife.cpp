@@ -29,7 +29,7 @@ void GameOfLife::start()
 
         if (aliveCount == 0)        // Jeśli liczba komórek żywych wynosi 0, zatrzymaj symulację
         {
-            displayBoard();
+            //displayBoard();
             stop();
             cout << "No live cells. Simulation stopped after " << getTotalSteps() << " Steps." << endl;
             break;
@@ -43,7 +43,7 @@ void GameOfLife::start()
 
 void GameOfLife::step()
 {
-    displayBoard();
+    //displayBoard();
     board.nextGeneration();
     increaseTotalSteps();
 }
@@ -82,23 +82,19 @@ void GameOfLife::resizeBoard(int width, int height)
     board.resizeBoard(width, height);
 }
 
-void GameOfLife::displayBoard() const
+void GameOfLife::displayBoard()
 {
-    timer.getRunning();
-    //board.printBoard();
-    //this_thread::sleep_for(chrono::milliseconds(timer.getInterval()));
-}
-
-void GameOfLife::onStepButtonClicked() {
+    //timer.getRunning();
     if (!isRunning && !isStepButtonClicked) {
         step();
-        displayBoard();
         isStepButtonClicked = true;
     } else {
         isStepButtonClicked = false;
     }
+    //board.printBoard();
+    //this_thread::sleep_for(chrono::milliseconds(timer.getInterval()));
 }
 
-void GameOfLife::resetStepButtonState() {
-    isStepButtonClicked = false;
-}
+
+
+

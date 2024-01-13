@@ -35,13 +35,7 @@ public:
     void setRandomSeed(unsigned int seed);
     void resizeBoard(int width, int height);
     bool getIsRunning() const { return isRunning; }
-    void displayBoard() const;
-    void onStepButtonClicked();
-
-    void resetStepButtonState();
-
-signals:
-    void stepClicked();
+    void displayBoard();
 
 };
 

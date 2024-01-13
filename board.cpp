@@ -25,18 +25,22 @@ void Board::initializeBoard()
     }
 }
 
-void Board::printBoard() const
+void Board::printBoard(QTableWidget* tableWidget) const
 {
-    cout << endl;
+    const auto& cells = getCells();
 
-    for (int i = 0; i < height; ++i)
-    {
-        for (int j = 0; j < width; ++j)
-            cout << (cells[i][j] ? 'O' : '.') << ' ';
-
-        cout << endl;
+    for (int i = 0; i < getHeight(); ++i) {
+        for (int j = 0; j < getWidth(); ++j) {
+            QTableWidgetItem* item = tableWidget->item(i, j);
+            if (item) {
+                if (cells[i][j] == 1) {
+                    item->setBackground(QColor(Qt::blue));
+                } else {
+                    item->setBackground(QColor(Qt::white));
+                }
+            }
+        }
     }
-    cout << endl;
 }
 
 
