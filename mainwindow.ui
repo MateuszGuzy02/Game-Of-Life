@@ -17,18 +17,18 @@
    <widget class="QTableWidget" name="gameTable">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>10</y>
-      <width>581</width>
-      <height>441</height>
+      <x>30</x>
+      <y>40</y>
+      <width>501</width>
+      <height>351</height>
      </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="stepButton">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>150</y>
+      <x>580</x>
+      <y>130</y>
       <width>80</width>
       <height>24</height>
      </rect>

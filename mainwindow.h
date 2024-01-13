@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <QTableWidgetItem>
-#include "board.h"
 #include "gameoflife.h"
 
 QT_BEGIN_NAMESPACE

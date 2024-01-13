@@ -36,7 +36,7 @@ void GameOfLife::start()
         }
 
 
-    } while (isRunning);  // Pętla do-while sprawia, że pętla wykonuje się co najmniej raz
+    } while (isRunning);
 
     board.clear();
 }
@@ -91,7 +91,6 @@ void GameOfLife::displayBoard()
     } else {
         isStepButtonClicked = false;
     }
-    //board.printBoard();
     //this_thread::sleep_for(chrono::milliseconds(timer.getInterval()));
 }
 
