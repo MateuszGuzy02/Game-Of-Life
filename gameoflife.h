@@ -7,6 +7,8 @@
 
 class GameOfLife: public QObject {
     Q_OBJECT
+
+
 private:
 
     Board board;

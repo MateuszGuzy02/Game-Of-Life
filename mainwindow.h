@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTableWidgetItem>
+#include <QSpinBox>
 #include "gameoflife.h"
 
 QT_BEGIN_NAMESPACE
@@ -19,12 +20,20 @@ public:
 
 private slots:
     void on_stepButton_clicked();
+    void on_rowBox_valueChanged(int newWidth);
+    void on_columnBox_valueChanged(int newHeight);
 
 private:
     Ui::MainWindow *ui;
-    GameOfLife game;
+    GameOfLife *game;
+    QSpinBox *columnBox;
+    QSpinBox *rowBox;
 
-    void setupTable();
+    const int initialWidth = 5;
+    const int initialHeight = 5;
+
+    void setupTable(int width, int height);
     void updateTable();
+
 };
 #endif // MAINWINDOW_H

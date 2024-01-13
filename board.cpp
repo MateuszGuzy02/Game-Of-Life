@@ -34,7 +34,7 @@ void Board::printBoard(QTableWidget* tableWidget) const
             QTableWidgetItem* item = tableWidget->item(i, j);
             if (item) {
                 if (cells[i][j] == 1) {
-                    item->setBackground(QColor(Qt::blue));
+                    item->setBackground(QBrush(QColor(0, 153, 255)));
                 } else {
                     item->setBackground(QColor(Qt::white));
                 }

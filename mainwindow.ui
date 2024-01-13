@@ -17,10 +17,10 @@
    <widget class="QTableWidget" name="gameTable">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>40</y>
-      <width>501</width>
-      <height>351</height>
+      <x>10</x>
+      <y>10</y>
+      <width>561</width>
+      <height>451</height>
      </rect>
     </property>
    </widget>
@@ -35,6 +35,26 @@
     </property>
     <property name="text">
      <string>Step</string>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="rowBox">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>190</y>
+      <width>42</width>
+      <height>25</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="columnBox">
+    <property name="geometry">
+     <rect>
+      <x>590</x>
+      <y>230</y>
+      <width>42</width>
+      <height>25</height>
+     </rect>
     </property>
    </widget>
   </widget>
