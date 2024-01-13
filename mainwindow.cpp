@@ -85,3 +85,17 @@ void MainWindow::on_setSeedBox_valueChanged(int seed)
     updateTable();
 }
 
+
+void MainWindow::on_randomButton_clicked()
+{
+    game->getBoard().initializeBoard();
+    updateTable();
+}
+
+
+void MainWindow::on_clearButton_clicked()
+{
+    game->clearBoard();
+    updateTable();
+}
+

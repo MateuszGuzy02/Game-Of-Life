@@ -25,6 +25,10 @@ private slots:
 
     void on_setSeedBox_valueChanged(int seed);
 
+    void on_randomButton_clicked();
+
+    void on_clearButton_clicked();
+
 private:
     Ui::MainWindow *ui;
     GameOfLife *game;

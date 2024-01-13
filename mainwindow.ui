@@ -27,7 +27,7 @@
    <widget class="QPushButton" name="stepButton">
     <property name="geometry">
      <rect>
-      <x>580</x>
+      <x>670</x>
       <y>130</y>
       <width>80</width>
       <height>24</height>
@@ -40,7 +40,7 @@
    <widget class="QSpinBox" name="rowBox">
     <property name="geometry">
      <rect>
-      <x>590</x>
+      <x>680</x>
       <y>190</y>
       <width>42</width>
       <height>25</height>
@@ -50,7 +50,7 @@
    <widget class="QSpinBox" name="columnBox">
     <property name="geometry">
      <rect>
-      <x>590</x>
+      <x>680</x>
       <y>230</y>
       <width>42</width>
       <height>25</height>
@@ -60,11 +60,37 @@
    <widget class="QSpinBox" name="setSeedBox">
     <property name="geometry">
      <rect>
-      <x>600</x>
+      <x>650</x>
       <y>40</y>
       <width>42</width>
       <height>25</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="randomButton">
+    <property name="geometry">
+     <rect>
+      <x>700</x>
+      <y>40</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Random Seed</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="clearButton">
+    <property name="geometry">
+     <rect>
+      <x>660</x>
+      <y>290</y>
+      <width>80</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clear</string>
     </property>
    </widget>
   </widget>
