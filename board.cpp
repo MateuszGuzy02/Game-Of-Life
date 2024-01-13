@@ -54,9 +54,7 @@ void Board::resizeBoard(int newWidth, int newHeight)
 
 void Board::clear()
 {
-    cells.clear();
-    width = 0;
-    height = 0;
+    cells.assign(height, vector<int>(width, 0));
 }
 
 

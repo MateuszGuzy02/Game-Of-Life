@@ -57,6 +57,16 @@
      </rect>
     </property>
    </widget>
+   <widget class="QSpinBox" name="setSeedBox">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>40</y>
+      <width>42</width>
+      <height>25</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

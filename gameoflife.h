@@ -21,7 +21,7 @@ private:
 
 public:
 
-    GameOfLife(int width, int height) : board(width, height), isRunning(false), randomSeed(0), isStepButtonClicked(false) {}
+    GameOfLife(int width, int height);
 
     Timer timer;
     Board& getBoard() { return board; }
@@ -38,6 +38,7 @@ public:
     void resizeBoard(int width, int height);
     bool getIsRunning() const { return isRunning; }
     void displayBoard();
+    void clearBoard();
 
 };
 

@@ -23,14 +23,16 @@ private slots:
     void on_rowBox_valueChanged(int newWidth);
     void on_columnBox_valueChanged(int newHeight);
 
+    void on_setSeedBox_valueChanged(int seed);
+
 private:
     Ui::MainWindow *ui;
     GameOfLife *game;
     QSpinBox *columnBox;
     QSpinBox *rowBox;
 
-    const int initialWidth = 5;
-    const int initialHeight = 5;
+    const int initialWidth = 10;
+    const int initialHeight = 10;
 
     void setupTable(int width, int height);
     void updateTable();

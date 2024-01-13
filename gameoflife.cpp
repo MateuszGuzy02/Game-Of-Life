@@ -5,6 +5,11 @@
 
 using namespace std;
 
+GameOfLife::GameOfLife(int width, int height) : board(width, height), isRunning(false), randomSeed(0), isStepButtonClicked(false)
+{
+    clearBoard();
+}
+
 void GameOfLife::start()
 {
     isRunning = true;
@@ -74,6 +79,7 @@ void GameOfLife::setBoardSize(int width, int height)
 void GameOfLife::setRandomSeed(unsigned int seed)
 {
     randomSeed = seed;
+    board.clear();
     board.initializeBoardWithSeed(randomSeed);
 }
 
@@ -92,6 +98,12 @@ void GameOfLife::displayBoard()
         isStepButtonClicked = false;
     }
     //this_thread::sleep_for(chrono::milliseconds(timer.getInterval()));
+}
+
+void GameOfLife::clearBoard()
+{
+    board.clear();
+    board.resizeBoard(board.getWidth(), board.getHeight());
 }
 
 

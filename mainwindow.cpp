@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Inicjalizacja obiektu GameOfLife
     game = new GameOfLife(initialWidth, initialHeight);
-    game->setRandomSeed(18);
+
 
     // Połącz sygnały z odpowiednimi slotami
     connect(ui->stepButton, &QPushButton::clicked, game, &GameOfLife::displayBoard);
@@ -36,6 +36,9 @@ void MainWindow::setupTable(int width, int height)
     // Ukryj numerowanie wierszy i kolumn
     ui->gameTable->verticalHeader()->setVisible(false);
     ui->gameTable->horizontalHeader()->setVisible(false);
+    // Ustawienie rozciągliwego rozmiaru kolumn i wierszy
+    ui->gameTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->gameTable->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     // Inicjalizacja komórek tabeli
     for (int i = 0; i < height; ++i) {
@@ -72,6 +75,13 @@ void MainWindow::on_columnBox_valueChanged(int newHeight)
 {
     setupTable(ui->rowBox->value(), newHeight);
     game->getBoard().resizeBoard(game->getBoard().getWidth(), newHeight);
+    updateTable();
+}
+
+
+void MainWindow::on_setSeedBox_valueChanged(int seed)
+{
+    game->setRandomSeed(static_cast<unsigned int>(seed));
     updateTable();
 }
 
