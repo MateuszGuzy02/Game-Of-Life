@@ -22,18 +22,20 @@ private slots:
     void on_stepButton_clicked();
     void on_rowBox_valueChanged(int newWidth);
     void on_columnBox_valueChanged(int newHeight);
-
     void on_setSeedBox_valueChanged(int seed);
-
     void on_randomButton_clicked();
-
     void on_clearButton_clicked();
+    void on_startButton_clicked();
+
+
+    void on_pauseResumeButton_clicked();
 
 private:
     Ui::MainWindow *ui;
     GameOfLife *game;
     QSpinBox *columnBox;
     QSpinBox *rowBox;
+    bool isPaused;
 
     const int initialWidth = 10;
     const int initialHeight = 10;

@@ -1,13 +1,18 @@
 #ifndef GAMEOFLIFE_H
 #define GAMEOFLIFE_H
 #include "board.h"
-#include "timer.h"
+
 #include <QObject>
 #include <QTableWidgetItem>
+#include <QCoreApplication>
+#include <QMessageBox>
 
 class GameOfLife: public QObject {
     Q_OBJECT
 
+
+signals:
+    void boardUpdated();
 
 private:
 
@@ -15,22 +20,22 @@ private:
     bool isRunning;
     unsigned int randomSeed;
     bool automaticStep;
-    int totalSteps;
+    bool stopRequested;
+    unsigned int totalSteps;
 
     bool isStepButtonClicked;
+    std::vector<std::vector<int>> previousBoardState;
 
 public:
 
     GameOfLife(int width, int height);
 
-    Timer timer;
     Board& getBoard() { return board; }
     int getTotalSteps() const { return totalSteps; }
-    void increaseTotalSteps(int steps = 1) { totalSteps += steps; }  // Funkcja zwiększająca licznik kroków
+    void increaseTotalSteps(unsigned int steps = 1);
+
 
     void start();
-    void pause();
-    void resume();
     void stop();
     void step();
     void setBoardSize(int width, int height);
@@ -39,6 +44,10 @@ public:
     bool getIsRunning() const { return isRunning; }
     void displayBoard();
     void clearBoard();
+
+public slots:
+    void pause();
+    void resume();
 
 };
 

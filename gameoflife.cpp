@@ -1,7 +1,7 @@
 #include "gameoflife.h"
 #include <chrono>
 #include <thread>
-#include <iostream>
+
 
 using namespace std;
 
@@ -14,15 +14,25 @@ void GameOfLife::start()
 {
     isRunning = true;
     automaticStep = true;  // Ustawienie automatycznego kroku
-    timer.start();
+    stopRequested = false; // Inicjalizacja flagi
+    totalSteps = 0;
 
-    do {
+    // Inicjalizacja poprzedniego stanu planszy
+    previousBoardState = board.getCells();
+
+    do
+    {
         if (automaticStep) {
             step();  // Wykonaj krok symulacji
+            emit boardUpdated();
+
+            QCoreApplication::processEvents(); // Pozwól na aktualizacje interfejsu graficznego
+            std::this_thread::sleep_for(std::chrono::milliseconds(100)); // Opcjonalne opóźnienie
         }
 
         int aliveCount = 0;
         auto cells = board.getCells();
+
         for (const auto& row : cells)
         {
             for (int cell : row)
@@ -34,16 +44,23 @@ void GameOfLife::start()
 
         if (aliveCount == 0)        // Jeśli liczba komórek żywych wynosi 0, zatrzymaj symulację
         {
-            //displayBoard();
             stop();
-            cout << "No live cells. Simulation stopped after " << getTotalSteps() << " Steps." << endl;
+            QMessageBox::information(nullptr, "Koniec symulacji", "Symulacja zakończona po " + QString::number(getTotalSteps()) + " krokach.");
             break;
         }
 
+        else if (previousBoardState == board.getCells()) // Sprawdź, czy plansza powtarza się
+        {
+            stop();
+            QMessageBox::information(nullptr, "Koniec symulacji", "Plansza osiągnęła stan stabilny. Symulacja zatrzymana po " + QString::number(getTotalSteps()) + " krokach.");
+            break;
+        }
 
-    } while (isRunning);
+        // Zaktualizuj poprzedni stan planszy
+        previousBoardState = board.getCells();
 
-    board.clear();
+    } while (isRunning && !stopRequested);
+
 }
 
 void GameOfLife::step()
@@ -56,19 +73,22 @@ void GameOfLife::step()
 void GameOfLife::pause()
 {
     isRunning = false;      // Zatrzymywanie symulacji
-    timer.pause();
+    automaticStep = false;  // Zatrzymaj automatyczny krok symulacji
 }
 
 void GameOfLife::resume()
 {
-    isRunning = true;      // Wznowienie symulacji
-    timer.resume();
+    if (!isRunning) {
+        isRunning = true;
+        automaticStep = true;
+        stopRequested = false;
+        start();  // Uruchom ponownie symulację
+    }
 }
 
 void GameOfLife::stop()
 {
     isRunning = false;     // Zakończenie symulacji
-    timer.stop();
 }
 
 void GameOfLife::setBoardSize(int width, int height)
@@ -88,16 +108,21 @@ void GameOfLife::resizeBoard(int width, int height)
     board.resizeBoard(width, height);
 }
 
+void GameOfLife::increaseTotalSteps(unsigned int steps)
+{
+    totalSteps += steps;
+}
+
 void GameOfLife::displayBoard()
 {
-    //timer.getRunning();
+
     if (!isRunning && !isStepButtonClicked) {
         step();
+        emit boardUpdated();  // Emituj sygnał po każdym kroku
         isStepButtonClicked = true;
     } else {
         isStepButtonClicked = false;
     }
-    //this_thread::sleep_for(chrono::milliseconds(timer.getInterval()));
 }
 
 void GameOfLife::clearBoard()
@@ -105,7 +130,3 @@ void GameOfLife::clearBoard()
     board.clear();
     board.resizeBoard(board.getWidth(), board.getHeight());
 }
-
-
-
-

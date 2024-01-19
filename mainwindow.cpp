@@ -4,6 +4,7 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
+    , isPaused(false)
 {
     ui->setupUi(this);
 
@@ -13,6 +14,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Połącz sygnały z odpowiednimi slotami
     connect(ui->stepButton, &QPushButton::clicked, game, &GameOfLife::displayBoard);
+
+    // Emitowanie sygnału do odświeżania planszy
+    connect(game, &GameOfLife::boardUpdated, this, &MainWindow::updateTable);
+
 
     // Połączenie zmiany wartości spinboxów z odpowiednimi slotami w GameOfLife
     connect(ui->columnBox, SIGNAL(valueChanged(int)), game, SLOT(onColumnChanged(int)));
@@ -60,7 +65,7 @@ void MainWindow::updateTable() {
 
 void MainWindow::on_stepButton_clicked()
 {
-    game->displayBoard();
+    game->step();
     updateTable();
 }
 
@@ -96,6 +101,24 @@ void MainWindow::on_randomButton_clicked()
 void MainWindow::on_clearButton_clicked()
 {
     game->clearBoard();
-    updateTable();
+}
+
+
+void MainWindow::on_startButton_clicked()
+{
+
+    connect(ui->startButton, &QPushButton::clicked, game, &GameOfLife::start);
+    if (!game->getIsRunning())
+    {
+        ui->startButton->setEnabled(false);  // Wyłącz przycisk start
+        game->start();
+        ui->startButton->setEnabled(true);   // Włącz przycisk start po zakończeniu symulacji
+    }
+}
+
+
+void MainWindow::on_pauseResumeButton_clicked()
+{
+
 }
 
