@@ -24,7 +24,7 @@ private:
     unsigned int totalSteps;
 
     bool isStepButtonClicked;
-    std::vector<std::vector<int>> previousBoardState;
+    std::vector<std::vector<char>> previousBoardState;
 
 public:
 

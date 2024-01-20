@@ -12,14 +12,12 @@ SOURCES += \
     board.cpp \
     gameoflife.cpp \
     main.cpp \
-    mainwindow.cpp \
-    timer.cpp
+    mainwindow.cpp
 
 HEADERS += \
     board.h \
     gameoflife.h \
-    mainwindow.h \
-    timer.h
+    mainwindow.h
 
 FORMS += \
     mainwindow.ui

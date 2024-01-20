@@ -6,7 +6,7 @@
 class Board {
 private:
 
-    std::vector<std::vector<int>> cells;
+    std::vector<std::vector<char>> cells;
     int width = 0;
     int height = 0;
 
@@ -16,8 +16,9 @@ public:
 
     int getWidth() const { return width; }
     int getHeight() const { return height; }
-    int& getCell(int x, int y) { return cells[x][y]; }
-    const std::vector<std::vector<int>>& getCells() const { return cells; }
+    bool getCell(int x, int y) const;
+    void setCell(int x, int y, bool value);
+    const std::vector<std::vector<char>>& getCells() const { return cells; }
 
     void initializeBoard();
     void initializeBoardWithSeed(unsigned int seed);

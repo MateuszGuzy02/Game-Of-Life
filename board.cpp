@@ -16,12 +16,12 @@ void Board::initializeBoard()
     mt19937 rng(static_cast<unsigned int>(time(nullptr)));  // Inicjalizacja generatora liczb pseudolosowych
     uniform_int_distribution<int> dist(0, 1);               // Dystrybucja dla losowania liczb 0 lub 1
 
-    cells.resize(height, vector<int>(width, 0));            // Inicjalizacja tablicy dynamicznej
+    cells.resize(height, vector<char>(width, 0));
 
     for (int i = 0; i < height; ++i)
     {
         for (int j = 0; j < width; ++j)
-            cells[i][j] = dist(rng);                        // Losowa wartość: 0 lub 1
+            cells[i][j] = static_cast<char>(dist(rng));  // Losowa wartość: 0 lub 1
     }
 }
 
@@ -49,18 +49,18 @@ void Board::resizeBoard(int newWidth, int newHeight)
     width = newWidth;
     height = newHeight;
 
-    cells.assign(height, vector<int>(width, 0));            // Tworzymy nową tablicę o zadanych wymiarach i wypełniamy ją zerami
+    cells.assign(height, vector<char>(width, 0));            // Tworzymy nową tablicę o zadanych wymiarach i wypełniamy ją zerami
 }
 
 void Board::clear()
 {
-    cells.assign(height, vector<int>(width, 0));
+    cells.assign(height, vector<char>(width, 0));
 }
 
 
 void Board::nextGeneration()
 {
-    vector<vector<int>> newCells(height, vector<int>(width, 0));
+    vector<vector<char>> newCells(height, vector<char>(width, 0));
 
     for (int i = 0; i < height; ++i)
     {
@@ -90,6 +90,16 @@ int Board::countAliveNeighbors(int x, int y) const
     }
 
     return alive;
+}
+
+bool Board::getCell(int x, int y) const
+{
+    return cells[x][y] == 1;
+}
+
+void Board::setCell(int x, int y, bool value)
+{
+    cells[x][y] = value ? 1 : 0;
 }
 
 bool Board::isAlive(const int x, const int y) const
@@ -127,7 +137,7 @@ void Board::initializeBoardWithSeed(unsigned int seed)
     mt19937 gen(seed);                                  // Użyj ziarna dla generatora liczb losowych
     uniform_int_distribution<> dis(0, 1);               // Zakres losowania: 0 lub 1
 
-    cells.resize(height, vector<int>(width, 0));        // Inicjalizacja tablicy dynamicznej
+    cells.resize(height, vector<char>(width, 0));        // Inicjalizacja tablicy dynamicznej
 
     for (int i = 0; i < height; ++i)
     {
