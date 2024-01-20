@@ -23,6 +23,9 @@ void Board::initializeBoard()
         for (int j = 0; j < width; ++j)
             cells[i][j] = static_cast<char>(dist(rng));  // Losowa wartość: 0 lub 1
     }
+
+    int livingCellsCount = countLivingCells();
+    emit livingCellsCountUpdated(livingCellsCount);
 }
 
 void Board::printBoard(QTableWidget* tableWidget) const
@@ -55,6 +58,7 @@ void Board::resizeBoard(int newWidth, int newHeight)
 void Board::clear()
 {
     cells.assign(height, vector<char>(width, 0));
+    emit livingCellsCountUpdated(0);
 }
 
 
@@ -76,20 +80,22 @@ void Board::nextGeneration()
     cells = newCells;
 }
 
-int Board::countAliveNeighbors(int x, int y) const
+int Board::countLivingCells() const
 {
-    int alive = 0;
+    int livingCellsCount = 0;
 
-    for (int ni = max(0, x - 1); ni <= min(height - 1, x + 1); ++ni)
+    for (int i = 0; i < height; ++i)
     {
-        for (int nj = max(0, y - 1); nj <= min(width - 1, y + 1); ++nj)
+        for (int j = 0; j < width; ++j)
         {
-            if (ni != x || nj != y)               // Pomijamy współrzędne tej samej komórki
-                alive += cells[ni][nj];
+            if (getCell(i, j))  // Jeśli komórka jest żywa
+            {
+                livingCellsCount++;
+            }
         }
     }
 
-    return alive;
+    return livingCellsCount;
 }
 
 bool Board::getCell(int x, int y) const

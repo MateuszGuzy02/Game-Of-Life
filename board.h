@@ -2,8 +2,15 @@
 #define BOARD_H
 #include <vector>
 #include <QTableWidget>
+#include <QObject>
 
-class Board {
+class Board : public QObject
+{
+    Q_OBJECT
+
+signals:
+    void livingCellsCountUpdated(int count) const;
+
 private:
 
     std::vector<std::vector<char>> cells;
@@ -19,7 +26,6 @@ public:
     bool getCell(int x, int y) const;
     void setCell(int x, int y, bool value);
     const std::vector<std::vector<char>>& getCells() const { return cells; }
-
     void initializeBoard();
     void initializeBoardWithSeed(unsigned int seed);
     void resizeBoard(int newWidth, int newHeight);
@@ -27,8 +33,10 @@ public:
     void printBoard(QTableWidget* tableWidget) const;
     void clear();
 
-    int countAliveNeighbors(int x, int y) const;
+    int countLivingCells() const;
     bool isAlive(const int x, const int y) const;
+
+
 
 };
 #endif // BOARD_H

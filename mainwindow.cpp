@@ -18,16 +18,24 @@ MainWindow::MainWindow(QWidget *parent)
     // Emitowanie sygnału do odświeżania planszy
     connect(game, &GameOfLife::boardUpdated, this, &MainWindow::updateTable);
 
-    connect(ui->speedDial, SIGNAL(valueChanged(int)), ui->speedLCD, SLOT(display(int)));
-
 
     // Połączenie zmiany wartości spinboxów z odpowiednimi slotami w GameOfLife
     connect(ui->columnBox, SIGNAL(valueChanged(int)), game, SLOT(onColumnChanged(int)));
     connect(ui->rowBox, SIGNAL(valueChanged(int)), game, SLOT(onRowChanged(int)));
 
+
+    connect(ui->speedDial, SIGNAL(valueChanged(int)), ui->speedLCD, SLOT(display(int)));
     speedLCD = ui->speedLCD;
     speedLCD->setSegmentStyle(QLCDNumber::Flat);  // Ustaw styl segmentu
     speedLCD->setStyleSheet("QLCDNumber { color: black; background-color: lightGray; }");  // Ustaw kolor tekstu i tła
+    ui->LifeCells->setSegmentStyle(QLCDNumber::Flat);  // Ustaw styl segmentu
+    ui->LifeCells->setStyleSheet("QLCDNumber { color: black; background-color: lightGray; }");  // Ustaw kolor tekstu i tła
+    ui->stepsLCD->setSegmentStyle(QLCDNumber::Flat);  // Ustaw styl segmentu
+    ui->stepsLCD->setStyleSheet("QLCDNumber { color: black; background-color: lightGray; }");  // Ustaw kolor tekstu i tła
+
+    connect(game, &GameOfLife::livingCellsCountUpdated, this, &MainWindow::updateLivingCellsLCD);
+    connect(&game->getBoard(), &Board::livingCellsCountUpdated, this, &MainWindow::updateLivingCellsLCD);
+    connect(game, &GameOfLife::totalStepsUpdated, this, &MainWindow::updateTotalStepsLCD);
 
     // Inicjalizacja tabeli
     setupTable(initialWidth, initialHeight);
@@ -107,12 +115,13 @@ void MainWindow::on_randomButton_clicked()
 void MainWindow::on_clearButton_clicked()
 {
     game->clearBoard();
+    updateTable();
 }
 
 
 void MainWindow::on_startButton_clicked()
 {
-
+    disconnect(ui->startButton, &QPushButton::clicked, game, &GameOfLife::start);  // Odłącz istniejące połączenie
     connect(ui->startButton, &QPushButton::clicked, game, &GameOfLife::start);
     if (!game->getIsRunning())
     {
@@ -123,6 +132,17 @@ void MainWindow::on_startButton_clicked()
         game->start();
         ui->startButton->setEnabled(true);   // Włącz przycisk start po zakończeniu symulacji
     }
+
+}
+
+void MainWindow::updateLivingCellsLCD(int count)
+{
+    ui->LifeCells->display(count);  // Ustaw wartość QLCDNumber na aktualną liczbę żyjących komórek
+}
+
+void MainWindow::updateTotalStepsLCD(int steps)
+{
+    ui->stepsLCD->display(steps);  // Ustaw wartość QLCDNumber na aktualną liczbę kroków
 }
 
 

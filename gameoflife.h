@@ -13,6 +13,8 @@ class GameOfLife: public QObject {
 
 signals:
     void boardUpdated();
+    void livingCellsCountUpdated(int count);
+    void totalStepsUpdated(int steps);
 
 private:
 

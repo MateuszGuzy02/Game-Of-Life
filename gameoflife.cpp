@@ -18,12 +18,15 @@ void GameOfLife::start()
     stopRequested = false; // Inicjalizacja flagi
     totalSteps = 0;
 
-    // Inicjalizacja poprzedniego stanu planszy
-    previousBoardState = board.getCells();
+    emit totalStepsUpdated(totalSteps);  // Emituj sygnał z aktualną liczbą kroków
+
+
+    previousBoardState = board.getCells();  // Inicjalizacja poprzedniego stanu planszy
 
     while (isRunning && !stopRequested)
     {
-        if (automaticStep) {
+        if (automaticStep)
+        {
             step();  // Wykonaj krok symulacji
             emit boardUpdated();
 
@@ -47,7 +50,7 @@ void GameOfLife::start()
         {
             stop();
             QMessageBox::information(nullptr, "Koniec symulacji", "Symulacja zakończona po " + QString::number(getTotalSteps()) + " krokach.");
-                break;
+            break;
         }
 
         else if (previousBoardState == board.getCells()) // Sprawdź, czy plansza powtarza się
@@ -57,8 +60,7 @@ void GameOfLife::start()
             break;
         }
 
-        // Zaktualizuj poprzedni stan planszy
-        previousBoardState = board.getCells();
+        previousBoardState = board.getCells();  // Zaktualizuj poprzedni stan planszy
 
     }
 
@@ -66,10 +68,12 @@ void GameOfLife::start()
 
 void GameOfLife::step()
 {
-    //displayBoard();
     board.nextGeneration();
     increaseTotalSteps();
 
+    int livingCellsCount = board.countLivingCells();
+    emit livingCellsCountUpdated(livingCellsCount);  // Emituj sygnał z aktualną liczbą żyjących komórek
+    emit totalStepsUpdated(getTotalSteps());
 }
 
 void GameOfLife::pause()
@@ -104,16 +108,14 @@ void GameOfLife::setRandomSeed(unsigned int seed)
     randomSeed = seed;
     board.clear();
     board.initializeBoardWithSeed(randomSeed);
+
+    int livingCellsCount = board.countLivingCells(); // Oblicz liczbę żywych komórek
+    emit livingCellsCountUpdated(livingCellsCount); // Emituj sygnał z aktualną liczbą żywych komórek
 }
 
 void GameOfLife::resizeBoard(int width, int height)
 {
     board.resizeBoard(width, height);
-}
-
-void GameOfLife::increaseTotalSteps(unsigned int steps)
-{
-    totalSteps += steps;
 }
 
 void GameOfLife::displayBoard()
@@ -130,6 +132,17 @@ void GameOfLife::displayBoard()
 
 void GameOfLife::clearBoard()
 {
+    qDebug() << "Clearing board...";
     board.clear();
     board.resizeBoard(board.getWidth(), board.getHeight());
+    qDebug() << "Board cleared";
+
+    board.countLivingCells();
 }
+
+void GameOfLife::increaseTotalSteps(unsigned int steps)
+{
+    totalSteps += steps;
+    emit totalStepsUpdated(totalSteps);  // Emituj sygnał z aktualną liczbą kroków
+}
+

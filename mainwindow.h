@@ -30,7 +30,8 @@ private slots:
 
 
     void on_pauseResumeButton_clicked();
-
+    void updateLivingCellsLCD(int count);
+    void updateTotalStepsLCD(int steps);
 
 private:
     Ui::MainWindow *ui;
