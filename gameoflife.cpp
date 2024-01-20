@@ -12,6 +12,7 @@ GameOfLife::GameOfLife(int width, int height) : board(width, height), isRunning(
 
 void GameOfLife::start()
 {
+    qDebug() << "Rozpoczynam symulację z interwałem:" << interval;
     isRunning = true;
     automaticStep = true;  // Ustawienie automatycznego kroku
     stopRequested = false; // Inicjalizacja flagi
@@ -20,14 +21,14 @@ void GameOfLife::start()
     // Inicjalizacja poprzedniego stanu planszy
     previousBoardState = board.getCells();
 
-    do
+    while (isRunning && !stopRequested)
     {
         if (automaticStep) {
             step();  // Wykonaj krok symulacji
             emit boardUpdated();
 
             QCoreApplication::processEvents(); // Pozwól na aktualizacje interfejsu graficznego
-            std::this_thread::sleep_for(std::chrono::milliseconds(100)); // Opcjonalne opóźnienie
+            std::this_thread::sleep_for(std::chrono::milliseconds(getInterval())); // Opcjonalne opóźnienie
         }
 
         int aliveCount = 0;
@@ -46,7 +47,7 @@ void GameOfLife::start()
         {
             stop();
             QMessageBox::information(nullptr, "Koniec symulacji", "Symulacja zakończona po " + QString::number(getTotalSteps()) + " krokach.");
-            break;
+                break;
         }
 
         else if (previousBoardState == board.getCells()) // Sprawdź, czy plansza powtarza się
@@ -59,7 +60,7 @@ void GameOfLife::start()
         // Zaktualizuj poprzedni stan planszy
         previousBoardState = board.getCells();
 
-    } while (isRunning && !stopRequested);
+    }
 
 }
 
@@ -68,6 +69,7 @@ void GameOfLife::step()
     //displayBoard();
     board.nextGeneration();
     increaseTotalSteps();
+
 }
 
 void GameOfLife::pause()
@@ -89,6 +91,7 @@ void GameOfLife::resume()
 void GameOfLife::stop()
 {
     isRunning = false;     // Zakończenie symulacji
+
 }
 
 void GameOfLife::setBoardSize(int width, int height)

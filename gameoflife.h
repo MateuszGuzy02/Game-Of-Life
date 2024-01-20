@@ -26,6 +26,8 @@ private:
     bool isStepButtonClicked;
     std::vector<std::vector<char>> previousBoardState;
 
+    int interval;
+
 public:
 
     GameOfLife(int width, int height);
@@ -40,6 +42,8 @@ public:
     void step();
     void setBoardSize(int width, int height);
     void setRandomSeed(unsigned int seed);
+    void setInterval(int value) { interval = value; }
+    int getInterval() { return interval; }
     void resizeBoard(int width, int height);
     bool getIsRunning() const { return isRunning; }
     void displayBoard();

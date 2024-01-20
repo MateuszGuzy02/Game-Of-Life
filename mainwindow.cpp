@@ -4,9 +4,9 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , isPaused(false)
 {
     ui->setupUi(this);
+
 
     // Inicjalizacja obiektu GameOfLife
     game = new GameOfLife(initialWidth, initialHeight);
@@ -18,10 +18,16 @@ MainWindow::MainWindow(QWidget *parent)
     // Emitowanie sygnału do odświeżania planszy
     connect(game, &GameOfLife::boardUpdated, this, &MainWindow::updateTable);
 
+    connect(ui->speedDial, SIGNAL(valueChanged(int)), ui->speedLCD, SLOT(display(int)));
+
 
     // Połączenie zmiany wartości spinboxów z odpowiednimi slotami w GameOfLife
     connect(ui->columnBox, SIGNAL(valueChanged(int)), game, SLOT(onColumnChanged(int)));
     connect(ui->rowBox, SIGNAL(valueChanged(int)), game, SLOT(onRowChanged(int)));
+
+    speedLCD = ui->speedLCD;
+    speedLCD->setSegmentStyle(QLCDNumber::Flat);  // Ustaw styl segmentu
+    speedLCD->setStyleSheet("QLCDNumber { color: black; background-color: lightGray; }");  // Ustaw kolor tekstu i tła
 
     // Inicjalizacja tabeli
     setupTable(initialWidth, initialHeight);
@@ -110,6 +116,9 @@ void MainWindow::on_startButton_clicked()
     connect(ui->startButton, &QPushButton::clicked, game, &GameOfLife::start);
     if (!game->getIsRunning())
     {
+        int interval = ui->speedDial->value();
+        speedLCD->display(interval);
+        game->setInterval(interval);
         ui->startButton->setEnabled(false);  // Wyłącz przycisk start
         game->start();
         ui->startButton->setEnabled(true);   // Włącz przycisk start po zakończeniu symulacji
@@ -121,4 +130,5 @@ void MainWindow::on_pauseResumeButton_clicked()
 {
 
 }
+
 

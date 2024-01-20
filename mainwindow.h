@@ -5,6 +5,7 @@
 #include <QTableWidgetItem>
 #include <QSpinBox>
 #include "gameoflife.h"
+#include <QLCDNumber>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -30,12 +31,13 @@ private slots:
 
     void on_pauseResumeButton_clicked();
 
+
 private:
     Ui::MainWindow *ui;
     GameOfLife *game;
     QSpinBox *columnBox;
     QSpinBox *rowBox;
-    bool isPaused;
+    QLCDNumber *speedLCD;
 
     const int initialWidth = 10;
     const int initialHeight = 10;
