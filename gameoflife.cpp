@@ -5,15 +5,13 @@
 
 using namespace std;
 
-GameOfLife::GameOfLife(int width, int height) : board(width, height), isRunning(false), randomSeed(0), isStepButtonClicked(false)
+GameOfLife::GameOfLife(int width, int height) : board(width, height), isRunning(false), randomSeed(0), totalSteps(0), isStepButtonClicked(false)
 {
-    totalSteps = 0;
     clearBoard();
 }
 
 void GameOfLife::start()
 {
-    qDebug() << "Rozpoczynam symulację z interwałem:" << interval;
     isRunning = true;
     automaticStep = true;  // Ustawienie automatycznego kroku
     stopRequested = false; // Inicjalizacja flagi
@@ -50,33 +48,30 @@ void GameOfLife::start()
         if (aliveCount == 0)        // Jeśli liczba komórek żywych wynosi 0, zatrzymaj symulację
         {
             stop();
-            QMessageBox::information(nullptr, "Koniec symulacji", "Symulacja zakończona po " + QString::number(getTotalSteps()) + " krokach.");
+            QMessageBox::information(nullptr, "Simulation End", "Simulation completed after " + QString::number(getTotalSteps()) + " steps.");
             break;
         }
 
         else if (previousBoardState == board.getCells()) // Sprawdź, czy plansza powtarza się
         {
             stop();
-            QMessageBox::information(nullptr, "Koniec symulacji", "Plansza osiągnęła stan stabilny. Symulacja zatrzymana po " + QString::number(getTotalSteps()) + " krokach.");
+            QMessageBox::information(nullptr, "Simulation End", "The board has reached a stable state. Simulation stopped after " + QString::number(getTotalSteps()) + " steps.");
             break;
         }
 
         previousBoardState = board.getCells();  // Zaktualizuj poprzedni stan planszy
 
     }
-
 }
 
 void GameOfLife::step()
 {
-    qDebug() << "Executing step...";
     board.nextGeneration();
     increaseTotalSteps();
 
     int livingCellsCount = board.countLivingCells();
     emit livingCellsCountUpdated(livingCellsCount);  // Emituj sygnał z aktualną liczbą żyjących komórek
     emit totalStepsUpdated(getTotalSteps());
-    qDebug() << "Step executed. Total steps: " << getTotalSteps();
 }
 
 void GameOfLife::handleStepButtonClick()
@@ -100,7 +95,8 @@ void GameOfLife::pause()
 
 void GameOfLife::resume()
 {
-    if (!isRunning) {
+    if (!isRunning)
+    {
         isRunning = true;
         automaticStep = true;
         stopRequested = false;
@@ -111,7 +107,6 @@ void GameOfLife::resume()
 void GameOfLife::stop()
 {
     isRunning = false;     // Zakończenie symulacji
-
 }
 
 void GameOfLife::setBoardSize(int width, int height)
@@ -139,14 +134,15 @@ void GameOfLife::clearBoard()
 {
     board.clear();
     board.resizeBoard(board.getWidth(), board.getHeight());
-
     board.countLivingCells();
+    totalSteps = 0;
+    emit totalStepsUpdated(totalSteps);
 }
 
 void GameOfLife::increaseTotalSteps(unsigned int steps)
 {
-    QMutexLocker locker(&mutex);
     totalSteps += steps;
     emit totalStepsUpdated(totalSteps);  // Emituj sygnał z aktualną liczbą kroków
 }
+
 

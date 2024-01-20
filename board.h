@@ -9,6 +9,7 @@ class Board : public QObject
     Q_OBJECT
 
 signals:
+
     void livingCellsCountUpdated(int count) const;
 
 private:
@@ -35,8 +36,6 @@ public:
 
     int countLivingCells() const;
     bool isAlive(const int x, const int y) const;
-
-
 
 };
 #endif // BOARD_H

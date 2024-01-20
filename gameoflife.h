@@ -6,11 +6,10 @@
 #include <QTableWidgetItem>
 #include <QCoreApplication>
 #include <QMessageBox>
-#include <QMutex>
 
-class GameOfLife: public QObject {
+class GameOfLife: public QObject
+{
     Q_OBJECT
-
 
 signals:
     void boardUpdated();
@@ -30,7 +29,6 @@ private:
     std::vector<std::vector<char>> previousBoardState;
 
     int interval;
-    QMutex mutex;
 
 public:
 
@@ -52,8 +50,6 @@ public:
     bool getIsRunning() const { return isRunning; }
 
     void clearBoard();
-
-    void runSimulation();
 
 public slots:
     void pause();

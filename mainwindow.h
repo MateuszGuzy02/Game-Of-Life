@@ -4,8 +4,8 @@
 #include <QMainWindow>
 #include <QTableWidgetItem>
 #include <QSpinBox>
-#include "gameoflife.h"
 #include <QLCDNumber>
+#include "gameoflife.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -16,6 +16,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
@@ -28,12 +29,11 @@ private slots:
     void on_clearButton_clicked();
     void on_startButton_clicked();
 
-
-    void on_pauseResumeButton_clicked();
     void updateLivingCellsLCD(int count);
     void updateTotalStepsLCD(int steps);
 
 private:
+
     Ui::MainWindow *ui;
     GameOfLife *game;
     QSpinBox *columnBox;

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>907</width>
+    <width>1037</width>
     <height>654</height>
    </rect>
   </property>
@@ -23,19 +23,19 @@
    <widget class="QTableWidget" name="gameTable">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>561</width>
-      <height>451</height>
+      <x>30</x>
+      <y>60</y>
+      <width>751</width>
+      <height>541</height>
      </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="stepButton">
     <property name="geometry">
      <rect>
-      <x>700</x>
+      <x>829</x>
       <y>190</y>
-      <width>80</width>
+      <width>161</width>
       <height>24</height>
      </rect>
     </property>
@@ -46,8 +46,8 @@
    <widget class="QSpinBox" name="rowBox">
     <property name="geometry">
      <rect>
-      <x>680</x>
-      <y>280</y>
+      <x>100</x>
+      <y>10</y>
       <width>100</width>
       <height>27</height>
      </rect>
@@ -74,8 +74,8 @@
    <widget class="QSpinBox" name="columnBox">
     <property name="geometry">
      <rect>
-      <x>680</x>
-      <y>320</y>
+      <x>280</x>
+      <y>10</y>
       <width>100</width>
       <height>27</height>
      </rect>
@@ -102,9 +102,9 @@
    <widget class="QSpinBox" name="setSeedBox">
     <property name="geometry">
      <rect>
-      <x>760</x>
-      <y>230</y>
-      <width>42</width>
+      <x>890</x>
+      <y>270</y>
+      <width>101</width>
       <height>25</height>
      </rect>
     </property>
@@ -112,9 +112,9 @@
    <widget class="QPushButton" name="randomButton">
     <property name="geometry">
      <rect>
-      <x>810</x>
+      <x>830</x>
       <y>230</y>
-      <width>80</width>
+      <width>161</width>
       <height>24</height>
      </rect>
     </property>
@@ -125,9 +125,9 @@
    <widget class="QPushButton" name="clearButton">
     <property name="geometry">
      <rect>
-      <x>700</x>
+      <x>830</x>
       <y>150</y>
-      <width>80</width>
+      <width>161</width>
       <height>24</height>
      </rect>
     </property>
@@ -138,9 +138,9 @@
    <widget class="QPushButton" name="startButton">
     <property name="geometry">
      <rect>
-      <x>700</x>
-      <y>120</y>
-      <width>80</width>
+      <x>830</x>
+      <y>110</y>
+      <width>161</width>
       <height>24</height>
      </rect>
     </property>
@@ -148,24 +148,11 @@
      <string>Start</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pauseResumeButton">
-    <property name="geometry">
-     <rect>
-      <x>660</x>
-      <y>230</y>
-      <width>80</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Pause</string>
-    </property>
-   </widget>
    <widget class="QDial" name="speedDial">
     <property name="geometry">
      <rect>
-      <x>710</x>
-      <y>460</y>
+      <x>860</x>
+      <y>420</y>
       <width>150</width>
       <height>150</height>
      </rect>
@@ -195,8 +182,8 @@
    <widget class="QLCDNumber" name="speedLCD">
     <property name="geometry">
      <rect>
-      <x>730</x>
-      <y>420</y>
+      <x>910</x>
+      <y>370</y>
       <width>111</width>
       <height>31</height>
      </rect>
@@ -228,8 +215,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>420</y>
+      <x>830</x>
+      <y>370</y>
       <width>71</width>
       <height>31</height>
      </rect>
@@ -246,7 +233,7 @@
    <widget class="QLCDNumber" name="LifeCells">
     <property name="geometry">
      <rect>
-      <x>750</x>
+      <x>880</x>
       <y>20</y>
       <width>111</width>
       <height>31</height>
@@ -276,7 +263,7 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>700</x>
+      <x>830</x>
       <y>20</y>
       <width>41</width>
       <height>27</height>
@@ -300,7 +287,7 @@
    <widget class="QLCDNumber" name="stepsLCD">
     <property name="geometry">
      <rect>
-      <x>750</x>
+      <x>880</x>
       <y>60</y>
       <width>111</width>
       <height>31</height>
@@ -330,7 +317,7 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>700</x>
+      <x>830</x>
       <y>60</y>
       <width>49</width>
       <height>27</height>
@@ -351,13 +338,97 @@
      <string>Steps:</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>10</y>
+      <width>61</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>27</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>16777215</width>
+      <height>27</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Columns:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>10</y>
+      <width>51</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>27</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>16777215</width>
+      <height>27</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Rows:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>270</y>
+      <width>49</width>
+      <height>27</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>27</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Seed:</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>907</width>
+     <width>1037</width>
      <height>21</height>
     </rect>
    </property>

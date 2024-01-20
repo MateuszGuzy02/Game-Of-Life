@@ -32,15 +32,17 @@ void Board::printBoard(QTableWidget* tableWidget) const
 {
     const auto& cells = getCells();
 
-    for (int i = 0; i < getHeight(); ++i) {
-        for (int j = 0; j < getWidth(); ++j) {
+    for (int i = 0; i < getHeight(); ++i)
+    {
+        for (int j = 0; j < getWidth(); ++j)
+        {
             QTableWidgetItem* item = tableWidget->item(i, j);
-            if (item) {
-                if (cells[i][j] == 1) {
+            if (item)
+            {
+                if (cells[i][j] == 1)
                     item->setBackground(QBrush(QColor(0, 153, 255)));
-                } else {
+                else
                     item->setBackground(QColor(Qt::white));
-                }
             }
         }
     }
@@ -60,7 +62,6 @@ void Board::clear()
     cells.assign(height, vector<char>(width, 0));
     emit livingCellsCountUpdated(0);
 }
-
 
 void Board::nextGeneration()
 {
@@ -122,9 +123,7 @@ bool Board::isAlive(const int x, const int y) const
 
         // Sprawdź, czy współrzędne są w zakresie planszy
         if (ni >= 0 && ni < height && nj >= 0 && nj < width)
-        {
             alive += cells[ni][nj];
-        }
     }
 
 

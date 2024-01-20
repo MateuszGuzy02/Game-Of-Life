@@ -23,7 +23,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->columnBox, SIGNAL(valueChanged(int)), game, SLOT(onColumnChanged(int)));
     connect(ui->rowBox, SIGNAL(valueChanged(int)), game, SLOT(onRowChanged(int)));
 
-
     connect(ui->speedDial, SIGNAL(valueChanged(int)), ui->speedLCD, SLOT(display(int)));
     speedLCD = ui->speedLCD;
     speedLCD->setSegmentStyle(QLCDNumber::Flat);  // Ustaw styl segmentu
@@ -60,8 +59,10 @@ void MainWindow::setupTable(int width, int height)
     ui->gameTable->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     // Inicjalizacja komórek tabeli
-    for (int i = 0; i < height; ++i) {
-        for (int j = 0; j < width; ++j) {
+    for (int i = 0; i < height; ++i)
+    {
+        for (int j = 0; j < width; ++j)
+        {
             QTableWidgetItem* item = new QTableWidgetItem();
             item->setFlags(item->flags() ^ Qt::ItemIsEditable);  // Blokada edycji komórek
             ui->gameTable->setItem(i, j, item);
@@ -123,6 +124,7 @@ void MainWindow::on_startButton_clicked()
 {
     disconnect(ui->startButton, &QPushButton::clicked, game, &GameOfLife::start);  // Odłącz istniejące połączenie
     connect(ui->startButton, &QPushButton::clicked, game, &GameOfLife::start);
+
     if (!game->getIsRunning())
     {
         int interval = ui->speedDial->value();
@@ -143,12 +145,6 @@ void MainWindow::updateLivingCellsLCD(int count)
 void MainWindow::updateTotalStepsLCD(int steps)
 {
     ui->stepsLCD->display(steps);  // Ustaw wartość QLCDNumber na aktualną liczbę kroków
-}
-
-
-void MainWindow::on_pauseResumeButton_clicked()
-{
-
 }
 
 
