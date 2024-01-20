@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     // Połącz sygnały z odpowiednimi slotami
-    connect(ui->stepButton, &QPushButton::clicked, game, &GameOfLife::displayBoard);
+    connect(ui->stepButton, &QPushButton::clicked, game, &GameOfLife::handleStepButtonClick);
 
     // Emitowanie sygnału do odświeżania planszy
     connect(game, &GameOfLife::boardUpdated, this, &MainWindow::updateTable);
@@ -79,7 +79,7 @@ void MainWindow::updateTable() {
 
 void MainWindow::on_stepButton_clicked()
 {
-    game->step();
+    game->handleStepButtonClick();
     updateTable();
 }
 

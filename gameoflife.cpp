@@ -7,6 +7,7 @@ using namespace std;
 
 GameOfLife::GameOfLife(int width, int height) : board(width, height), isRunning(false), randomSeed(0), isStepButtonClicked(false)
 {
+    totalSteps = 0;
     clearBoard();
 }
 
@@ -68,13 +69,28 @@ void GameOfLife::start()
 
 void GameOfLife::step()
 {
+    qDebug() << "Executing step...";
     board.nextGeneration();
     increaseTotalSteps();
 
     int livingCellsCount = board.countLivingCells();
     emit livingCellsCountUpdated(livingCellsCount);  // Emituj sygnał z aktualną liczbą żyjących komórek
     emit totalStepsUpdated(getTotalSteps());
+    qDebug() << "Step executed. Total steps: " << getTotalSteps();
 }
+
+void GameOfLife::handleStepButtonClick()
+{
+    if (!isRunning && !isStepButtonClicked)
+    {
+        step();
+        emit boardUpdated();  // Emituj sygnał po każdym kroku
+        isStepButtonClicked = true;
+    }
+    else
+        isStepButtonClicked = false;
+}
+
 
 void GameOfLife::pause()
 {
@@ -118,30 +134,18 @@ void GameOfLife::resizeBoard(int width, int height)
     board.resizeBoard(width, height);
 }
 
-void GameOfLife::displayBoard()
-{
-
-    if (!isRunning && !isStepButtonClicked) {
-        step();
-        emit boardUpdated();  // Emituj sygnał po każdym kroku
-        isStepButtonClicked = true;
-    } else {
-        isStepButtonClicked = false;
-    }
-}
 
 void GameOfLife::clearBoard()
 {
-    qDebug() << "Clearing board...";
     board.clear();
     board.resizeBoard(board.getWidth(), board.getHeight());
-    qDebug() << "Board cleared";
 
     board.countLivingCells();
 }
 
 void GameOfLife::increaseTotalSteps(unsigned int steps)
 {
+    QMutexLocker locker(&mutex);
     totalSteps += steps;
     emit totalStepsUpdated(totalSteps);  // Emituj sygnał z aktualną liczbą kroków
 }

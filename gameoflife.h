@@ -6,6 +6,7 @@
 #include <QTableWidgetItem>
 #include <QCoreApplication>
 #include <QMessageBox>
+#include <QMutex>
 
 class GameOfLife: public QObject {
     Q_OBJECT
@@ -29,6 +30,7 @@ private:
     std::vector<std::vector<char>> previousBoardState;
 
     int interval;
+    QMutex mutex;
 
 public:
 
@@ -48,13 +50,15 @@ public:
     int getInterval() { return interval; }
     void resizeBoard(int width, int height);
     bool getIsRunning() const { return isRunning; }
-    void displayBoard();
+
     void clearBoard();
+
+    void runSimulation();
 
 public slots:
     void pause();
     void resume();
-
+    void handleStepButtonClick();
 };
 
 #endif // GAMEOFLIFE_H
