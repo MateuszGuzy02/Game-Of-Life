@@ -1,7 +1,4 @@
 #include "gameoflife.h"
-#include <chrono>
-#include <thread>
-
 
 using namespace std;
 

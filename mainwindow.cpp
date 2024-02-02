@@ -27,8 +27,10 @@ MainWindow::MainWindow(QWidget *parent)
     speedLCD = ui->speedLCD;
     speedLCD->setSegmentStyle(QLCDNumber::Flat);  // Ustaw styl segmentu
     speedLCD->setStyleSheet("QLCDNumber { color: black; background-color: lightGray; }");  // Ustaw kolor tekstu i tła
+
     ui->LifeCells->setSegmentStyle(QLCDNumber::Flat);  // Ustaw styl segmentu
     ui->LifeCells->setStyleSheet("QLCDNumber { color: black; background-color: lightGray; }");  // Ustaw kolor tekstu i tła
+
     ui->stepsLCD->setSegmentStyle(QLCDNumber::Flat);  // Ustaw styl segmentu
     ui->stepsLCD->setStyleSheet("QLCDNumber { color: black; background-color: lightGray; }");  // Ustaw kolor tekstu i tła
 
@@ -54,6 +56,7 @@ void MainWindow::setupTable(int width, int height)
     // Ukryj numerowanie wierszy i kolumn
     ui->gameTable->verticalHeader()->setVisible(false);
     ui->gameTable->horizontalHeader()->setVisible(false);
+
     // Ustawienie rozciągliwego rozmiaru kolumn i wierszy
     ui->gameTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->gameTable->verticalHeader()->setSectionResizeMode(QHeaderView::Stretch);
@@ -134,7 +137,6 @@ void MainWindow::on_startButton_clicked()
         game->start();
         ui->startButton->setEnabled(true);   // Włącz przycisk start po zakończeniu symulacji
     }
-
 }
 
 void MainWindow::updateLivingCellsLCD(int count)
