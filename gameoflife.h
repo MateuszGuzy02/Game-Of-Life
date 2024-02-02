@@ -7,14 +7,17 @@
 #include <QTableWidgetItem>
 #include <QCoreApplication>
 #include <QMessageBox>
+#include <QTimer>
 
 class GameOfLife: public QObject
 {
     Q_OBJECT
+
 signals:
     void boardUpdated();
     void livingCellsCountUpdated(int count);
     void totalStepsUpdated(int steps);
+    void timeUpdated(int elapsedMilliseconds);
 
 private:
     Board board;
@@ -22,10 +25,14 @@ private:
     unsigned int randomSeed;
     bool automaticStep;
     bool stopRequested;
+
     unsigned int totalSteps;
     int interval;
     bool isStepButtonClicked;
     std::vector<std::vector<char>> previousBoardState;
+    QTimer *timer;
+
+
 
 public:
     GameOfLife(int width, int height);
@@ -39,6 +46,7 @@ public:
     void setBoardSize(int width, int height);
     void setRandomSeed(unsigned int seed);
     void setInterval(int value) { interval = value; }
+
     int getInterval() { return interval; }
     void resizeBoard(int width, int height);
     bool getIsRunning() const { return isRunning; }
@@ -46,6 +54,8 @@ public:
     void pause();
     void resume();
     void handleStepButtonClick();
+    void handleTimerTimeout();
+
 
 };
 #endif // GAMEOFLIFE_H

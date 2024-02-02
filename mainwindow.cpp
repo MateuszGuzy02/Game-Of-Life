@@ -38,6 +38,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&game->getBoard(), &Board::livingCellsCountUpdated, this, &MainWindow::updateLivingCellsLCD);
     connect(game, &GameOfLife::totalStepsUpdated, this, &MainWindow::updateTotalStepsLCD);
 
+
+    // Zatrzymanie oraz wznowienie symulacji
+    connect(ui->pauseButton, &QPushButton::clicked, game, &GameOfLife::pause);
+    connect(ui->resumeButton, &QPushButton::clicked, game, &GameOfLife::resume);
+
     // Inicjalizacja tabeli
     setupTable(initialWidth, initialHeight);
 }
@@ -125,14 +130,17 @@ void MainWindow::on_clearButton_clicked()
 
 void MainWindow::on_startButton_clicked()
 {
-    disconnect(ui->startButton, &QPushButton::clicked, game, &GameOfLife::start);  // Odłącz istniejące połączenie
-    connect(ui->startButton, &QPushButton::clicked, game, &GameOfLife::start);
-
     if (!game->getIsRunning())
     {
+        // Odłącz istniejące połączenie
+        disconnect(ui->startButton, &QPushButton::clicked, game, &GameOfLife::start);
+
+        // Ustaw interwał i wyświetl na LCD
         int interval = ui->speedDial->value();
         speedLCD->display(interval);
         game->setInterval(interval);
+
+        // Uruchom symulację
         ui->startButton->setEnabled(false);  // Wyłącz przycisk start
         game->start();
         ui->startButton->setEnabled(true);   // Włącz przycisk start po zakończeniu symulacji
@@ -147,6 +155,18 @@ void MainWindow::updateLivingCellsLCD(int count)
 void MainWindow::updateTotalStepsLCD(int steps)
 {
     ui->stepsLCD->display(steps);  // Ustaw wartość QLCDNumber na aktualną liczbę kroków
+}
+
+
+void MainWindow::on_pauseButton_clicked()
+{
+    game->pause();
+}
+
+
+void MainWindow::on_resumeButton_clicked()
+{
+    game->resume();
 }
 
 

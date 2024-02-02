@@ -32,6 +32,9 @@ private slots:
     void updateLivingCellsLCD(int count);
     void updateTotalStepsLCD(int steps);
 
+    void on_pauseButton_clicked();
+    void on_resumeButton_clicked();
+
 private:
 
     Ui::MainWindow *ui;
@@ -39,6 +42,7 @@ private:
     QSpinBox *columnBox;
     QSpinBox *rowBox;
     QLCDNumber *speedLCD;
+
 
     const int initialWidth = 10;
     const int initialHeight = 10;
