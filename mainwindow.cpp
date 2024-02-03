@@ -225,10 +225,14 @@ void MainWindow::saveToFile()
             // Zapisz interwał czasowy
             out << "Interval: " << game->getInterval() << "\n";
 
+            // Zapisz kolory komórek
+            out << "LiveCellColor: " << game->getBoard().getLiveCellColor().name() << "\n";
+            out << "DeadCellColor: " << game->getBoard().getDeadCellColor().name() << "\n";
+
             // Zapisz żywe i martwe komórki
             out << "BoardState:\n";
-            const auto &cells = game->getBoard().getCells();
-            for (const auto &row : cells)
+            const auto& cells = game->getBoard().getCells();
+            for (const auto& row : cells)
             {
                 for (int cell : row)
                 {
@@ -305,6 +309,16 @@ void MainWindow::openFromFile()
                     updateTable();
                     ui->speedDial->setValue(game->getInterval());
                 }
+                else if (key == "LiveCellColor")
+                {
+                    QColor liveCellColor(value);
+                    game->getBoard().setLiveCellColor(liveCellColor);
+                }
+                else if (key == "DeadCellColor")
+                {
+                    QColor deadCellColor(value);
+                    game->getBoard().setDeadCellColor(deadCellColor);
+                }
                 else if (key == "BoardState")
                 {
                     // Rozdziel wartości i ustaw komórki w obiekcie gry
@@ -314,7 +328,7 @@ void MainWindow::openFromFile()
                         line = in.readLine().trimmed();
                         QStringList cellValues = line.split(" ", Qt::SkipEmptyParts);
                         std::vector<char> row;
-                        for (const QString &cellValue : cellValues)
+                        for (const QString& cellValue : cellValues)
                         {
                             row.push_back(cellValue.toInt());
                         }
@@ -340,8 +354,25 @@ void MainWindow::openFromFile()
 }
 
 
-void MainWindow::on_actionSettings_Cells_triggered()
+void MainWindow::on_actionColorLivingCells_triggered()
 {
+    QColor chosenColor = QColorDialog::getColor(Qt::white, this, "Choose Color");
 
+    if (chosenColor.isValid())
+    {
+        game->getBoard().setLiveCellColor(chosenColor);  // Przekaż kolor do obiektu Board
+        updateTable();
+    }
+}
+
+void MainWindow::on_actionColor_of_dead_cells_triggered()
+{
+    QColor chosenColor = QColorDialog::getColor(Qt::white, this, "Choose Color");
+
+    if (chosenColor.isValid())
+    {
+        game->getBoard().setDeadCellColor(chosenColor);  // Przekaż kolor do obiektu Board
+        updateTable();
+    }
 }
 

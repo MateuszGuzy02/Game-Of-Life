@@ -1,7 +1,6 @@
 #include "board.h"
 #include <iostream>
 #include <cstdlib>
-#include <ctime>
 #include <random>
 
 using namespace std;
@@ -40,9 +39,9 @@ void Board::printBoard(QTableWidget* tableWidget) const
             if (item)
             {
                 if (cells[i][j] == 1)
-                    item->setBackground(QBrush(QColor(0, 153, 255)));
+                    item->setBackground(QBrush(liveCellColor));
                 else
-                    item->setBackground(QColor(Qt::white));
+                    item->setBackground(QColor(deadCellColor));
             }
         }
     }
@@ -159,4 +158,15 @@ void Board::setCells(std::vector<std::vector<char>>& newCells)
         cells = newCells;
         emit livingCellsCountUpdated(countLivingCells());
     }
+}
+
+void Board::setLiveCellColor(const QColor& color)
+{
+    liveCellColor = color;
+}
+
+
+void Board::setDeadCellColor(const QColor& color)
+{
+    deadCellColor = color;
 }

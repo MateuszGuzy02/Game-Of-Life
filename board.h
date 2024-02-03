@@ -3,6 +3,7 @@
 #include <vector>
 #include <QTableWidget>
 #include <QObject>
+#include <QColor>
 
 class Board : public QObject
 {
@@ -17,6 +18,8 @@ private:
     std::vector<std::vector<char>> cells;
     int width = 0;
     int height = 0;
+    QColor liveCellColor = Qt::black;
+    QColor deadCellColor = Qt::white;
 
 public:
 
@@ -34,6 +37,11 @@ public:
     void nextGeneration();
     void printBoard(QTableWidget* tableWidget) const;
     void clear();
+
+    void setLiveCellColor(const QColor& color);
+    void setDeadCellColor(const QColor& color);
+    QColor getLiveCellColor() const { return liveCellColor; }
+    QColor getDeadCellColor() const { return deadCellColor; }
 
     int countLivingCells() const;
     bool isAlive(const int x, const int y) const;

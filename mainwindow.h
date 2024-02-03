@@ -9,8 +9,9 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QTextStream>
+#include <QColor>
+#include <QColorDialog>
 #include "gameoflife.h"
-#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -26,26 +27,29 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_stepButton_clicked();
+
     void on_rowBox_valueChanged(int newWidth);
     void on_columnBox_valueChanged(int newHeight);
+
     void on_setSeedBox_valueChanged(int seed);
     void on_randomButton_clicked();
+
     void on_clearButton_clicked();
-    void on_startButton_clicked();
 
     void updateLivingCellsLCD(int count);
     void updateTotalStepsLCD(int steps);
 
+    void on_stepButton_clicked();
+    void on_startButton_clicked();
     void on_pauseButton_clicked();
     void on_resumeButton_clicked();
+    void on_stopButton_clicked();
 
     void saveToFile();
     void openFromFile();
 
-    void on_stopButton_clicked();
-
-    void on_actionSettings_Cells_triggered();
+    void on_actionColorLivingCells_triggered();
+    void on_actionColor_of_dead_cells_triggered();
 
 private:
 
@@ -60,6 +64,7 @@ private:
 
     const int initialWidth = 10;
     const int initialHeight = 10;
+
     void setupTable(int width, int height);
     void updateTable();
 

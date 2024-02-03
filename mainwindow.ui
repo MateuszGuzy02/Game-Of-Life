@@ -981,7 +981,15 @@
     <addaction name="actionSave"/>
     <addaction name="actionOpen"/>
    </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionColorLivingCells"/>
+    <addaction name="actionColor_of_dead_cells"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuEdit"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionSave">
@@ -998,6 +1006,19 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionColorLivingCells">
+   <property name="text">
+    <string>Color of living cells</string>
+   </property>
+   <property name="toolTip">
+    <string>Color of living cells</string>
+   </property>
+  </action>
+  <action name="actionColor_of_dead_cells">
+   <property name="text">
+    <string>Color of dead cells</string>
    </property>
   </action>
  </widget>
