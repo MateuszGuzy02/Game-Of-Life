@@ -12,7 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->pauseButton->setEnabled(false);
     ui->stopButton->setEnabled(false);
     ui->stepButton->setEnabled(false);
-    ui->clearButton->setEnabled(false);
 
     // Inicjalizacja obiektu GameOfLife
     game = new GameOfLife(initialWidth, initialHeight);
@@ -375,4 +374,3 @@ void MainWindow::on_actionColor_of_dead_cells_triggered()
         updateTable();
     }
 }
-

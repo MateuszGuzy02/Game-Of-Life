@@ -170,3 +170,13 @@ void Board::setDeadCellColor(const QColor& color)
 {
     deadCellColor = color;
 }
+
+void Board::toggleCellState(int row, int col)
+{
+    // Sprawdź, czy indeksy są w zakresie
+    if (row >= 0 && row < getHeight() && col >= 0 && col < getWidth())
+    {
+        // Ożyw lub uśmierć komórkę
+        cells[row][col] = (cells[row][col] == 1) ? 0 : 1;
+    }
+}

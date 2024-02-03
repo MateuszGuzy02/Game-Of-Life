@@ -11,7 +11,9 @@
 #include <QTextStream>
 #include <QColor>
 #include <QColorDialog>
+#include <QMouseEvent>
 #include "gameoflife.h"
+#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,6 +22,9 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+signals:
+    void cellClicked(int row, int col);
 
 public:
 
@@ -50,6 +55,8 @@ private slots:
 
     void on_actionColorLivingCells_triggered();
     void on_actionColor_of_dead_cells_triggered();
+
+
 
 private:
 
