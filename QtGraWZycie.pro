@@ -33,3 +33,5 @@ RESOURCES += \
 
 
  RC_ICONS = gameIcon.ico
+
+DISTFILES +=

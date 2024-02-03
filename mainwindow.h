@@ -45,6 +45,8 @@ private slots:
 
     void on_stopButton_clicked();
 
+    void on_actionSettings_Cells_triggered();
+
 private:
 
     Ui::MainWindow *ui;

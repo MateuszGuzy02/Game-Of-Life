@@ -339,3 +339,9 @@ void MainWindow::openFromFile()
     }
 }
 
+
+void MainWindow::on_actionSettings_Cells_triggered()
+{
+
+}
+
