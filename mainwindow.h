@@ -43,6 +43,8 @@ private slots:
     void saveToFile();
     void openFromFile();
 
+    void on_stopButton_clicked();
+
 private:
 
     Ui::MainWindow *ui;

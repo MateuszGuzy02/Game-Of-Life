@@ -7,6 +7,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    ui->startButton->setEnabled(false);
+    ui->resumeButton->setEnabled(false);
+    ui->pauseButton->setEnabled(false);
+    ui->stopButton->setEnabled(false);
+    ui->stepButton->setEnabled(false);
+    ui->clearButton->setEnabled(false);
 
     // Inicjalizacja obiektu GameOfLife
     game = new GameOfLife(initialWidth, initialHeight);
@@ -111,6 +117,9 @@ void MainWindow::on_columnBox_valueChanged(int newHeight)
 void MainWindow::on_setSeedBox_valueChanged(int seed)
 {
     game->setRandomSeed(static_cast<unsigned int>(seed));
+    ui->startButton->setEnabled(true);
+    ui->stepButton->setEnabled(true);
+    ui->clearButton->setEnabled(true);
     updateTable();
 }
 
@@ -118,6 +127,9 @@ void MainWindow::on_setSeedBox_valueChanged(int seed)
 void MainWindow::on_randomButton_clicked()
 {
     game->getBoard().initializeBoard();
+    ui->startButton->setEnabled(true);
+    ui->stepButton->setEnabled(true);
+    ui->clearButton->setEnabled(true);
     updateTable();
 }
 
@@ -144,9 +156,39 @@ void MainWindow::on_startButton_clicked()
         // Uruchom symulację
         ui->startButton->setEnabled(false);  // Wyłącz przycisk start
         game->start();
-        ui->startButton->setEnabled(true);   // Włącz przycisk start po zakończeniu symulacji
+        ui->pauseButton->setEnabled(true);   // Włącz przycisk pauzy
+        ui->stopButton->setEnabled(true);    // Włącz przycisk stop
+        ui->stepButton->setEnabled(false);
     }
 }
+
+void MainWindow::on_stopButton_clicked()
+{
+    game->stop();
+    ui->stopButton->setEnabled(false);
+    ui->stepButton->setEnabled(false);
+    ui->startButton->setEnabled(false);    // Włącz przycisk start
+    ui->pauseButton->setEnabled(false);   // Wyłącz przycisk pauzy
+    ui->resumeButton->setEnabled(false);  // Wyłącz przycisk wznowienia
+}
+
+void MainWindow::on_pauseButton_clicked()
+{
+    game->pause();
+    ui->pauseButton->setEnabled(false);
+    ui->stepButton->setEnabled(true);
+    ui->resumeButton->setEnabled(true);   // Włącz przycisk wznowienia
+}
+
+
+void MainWindow::on_resumeButton_clicked()
+{
+    game->resume();
+    ui->resumeButton->setEnabled(false);
+    ui->pauseButton->setEnabled(true);   // Włącz przycisk pauzy
+    ui->stepButton->setEnabled(false);
+}
+
 
 void MainWindow::updateLivingCellsLCD(int count)
 {
@@ -156,18 +198,6 @@ void MainWindow::updateLivingCellsLCD(int count)
 void MainWindow::updateTotalStepsLCD(int steps)
 {
     ui->stepsLCD->display(steps);  // Ustaw wartość QLCDNumber na aktualną liczbę kroków
-}
-
-
-void MainWindow::on_pauseButton_clicked()
-{
-    game->pause();
-}
-
-
-void MainWindow::on_resumeButton_clicked()
-{
-    game->resume();
 }
 
 void MainWindow::saveToFile()
@@ -299,6 +329,7 @@ void MainWindow::openFromFile()
                 }
             }
 
+            ui->startButton->setEnabled(true);
             file.close();
         }
         else
@@ -307,6 +338,4 @@ void MainWindow::openFromFile()
         }
     }
 }
-
-
 

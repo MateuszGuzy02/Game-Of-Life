@@ -125,6 +125,14 @@ void GameOfLife::resume()
 void GameOfLife::stop()
 {
     isRunning = false;     // Zakończenie symulacji
+
+    timer->stop();         // Zatrzymaj timer
+
+    // Wyświetlenie komunikatu z informacją o liczbie kroków i żywych komórkach
+    QString message = QString("Simulation stopped after %1 steps.\nLiving cells: %2")
+                          .arg(totalSteps)
+                          .arg(board.countLivingCells());
+    QMessageBox::information(nullptr, "Simulation Stopped", message);
 }
 
 void GameOfLife::setBoardSize(int width, int height)

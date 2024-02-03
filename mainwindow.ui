@@ -139,13 +139,16 @@
     <property name="geometry">
      <rect>
       <x>830</x>
-      <y>180</y>
+      <y>120</y>
       <width>161</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
      <string>Start</string>
+    </property>
+    <property name="default">
+     <bool>false</bool>
     </property>
    </widget>
    <widget class="QDial" name="speedDial">
@@ -426,7 +429,7 @@
     <property name="geometry">
      <rect>
       <x>830</x>
-      <y>210</y>
+      <y>190</y>
       <width>161</width>
       <height>24</height>
      </rect>
@@ -439,13 +442,26 @@
     <property name="geometry">
      <rect>
       <x>830</x>
-      <y>240</y>
+      <y>220</y>
       <width>161</width>
       <height>24</height>
      </rect>
     </property>
     <property name="text">
      <string>Resume</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="stopButton">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>150</y>
+      <width>161</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Stop</string>
     </property>
    </widget>
   </widget>
