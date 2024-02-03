@@ -13,7 +13,6 @@
 #include <QColorDialog>
 #include <QMouseEvent>
 #include "gameoflife.h"
-#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,12 +26,10 @@ signals:
     void cellClicked(int row, int col);
 
 public:
-
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
 private slots:
-
     void on_rowBox_valueChanged(int newWidth);
     void on_columnBox_valueChanged(int newHeight);
 
@@ -59,7 +56,6 @@ private slots:
 
 
 private:
-
     Ui::MainWindow *ui;
     GameOfLife *game;
     QSpinBox *columnBox;
@@ -74,6 +70,9 @@ private:
 
     void setupTable(int width, int height);
     void updateTable();
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
 
 };
 #endif // MAINWINDOW_H

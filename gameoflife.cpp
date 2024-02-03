@@ -2,7 +2,7 @@
 
 using namespace std;
 
-GameOfLife::GameOfLife(int width, int height) : board(width, height), isRunning(false), randomSeed(0), totalSteps(0), isStepButtonClicked(false)
+GameOfLife::GameOfLife(int width, int height) : board(width, height), isRunning(false), isStepButtonClicked(false), randomSeed(0), totalSteps(0)
 {
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &GameOfLife::handleTimerTimeout);
@@ -12,12 +12,11 @@ GameOfLife::GameOfLife(int width, int height) : board(width, height), isRunning(
 
 void GameOfLife::start()
 {
-    if (!isLoadingFromFile) {
-        // Ustawienie interwału timera na wartość getInterval()
-        timer->start(getInterval());
+    if (!isLoadingFromFile)
+    {
+        timer->start(getInterval());        // Ustawienie interwału timera
 
-        // Resetowanie totalSteps tylko jeśli nie wczytujesz z pliku
-        totalSteps = 0;
+        totalSteps = 0;                     // Resetowanie totalSteps tylko jeśli nie wczytujesz z pliku
         emit totalStepsUpdated(totalSteps);
     }
 
@@ -27,10 +26,7 @@ void GameOfLife::start()
 
     previousBoardState = board.getCells();
 
-
-    // Ustawienie interwału timera na wartość getInterval()
-    timer->start(getInterval());
-
+    timer->start(getInterval());            // Ustawienie interwału timera na wartość getInterval()
 }
 
 void GameOfLife::handleTimerTimeout()
@@ -72,10 +68,8 @@ void GameOfLife::handleTimerTimeout()
 
     }
     else
-    {
-        // Zatrzymaj timer, gdy symulacja jest zatrzymywana
         timer->stop();
-    }
+
 }
 
 void GameOfLife::step()
@@ -84,7 +78,7 @@ void GameOfLife::step()
     increaseTotalSteps();
 
     int livingCellsCount = board.countLivingCells();
-    emit livingCellsCountUpdated(livingCellsCount);  // Emituj sygnał z aktualną liczbą żyjących komórek
+    emit livingCellsCountUpdated(livingCellsCount);         // Emituj sygnał z aktualną liczbą żyjących komórek
     emit totalStepsUpdated(getTotalSteps());
 }
 
@@ -93,19 +87,17 @@ void GameOfLife::handleStepButtonClick()
     if (!isRunning && !isStepButtonClicked)
     {
         step();
-        emit boardUpdated();  // Emituj sygnał po każdym kroku
+        emit boardUpdated();            // Emituj sygnał po każdym kroku
         isStepButtonClicked = true;
     }
     else
         isStepButtonClicked = false;
 }
 
-
 void GameOfLife::pause()
 {
-    isRunning = false;      // Zatrzymywanie symulacji
-    automaticStep = false;  // Zatrzymaj automatyczny krok symulacji
-
+    isRunning = false;              // Zatrzymywanie symulacji
+    automaticStep = false;          // Zatrzymaj automatyczny krok symulacji
 }
 
 void GameOfLife::resume()
@@ -116,28 +108,20 @@ void GameOfLife::resume()
         automaticStep = true;
         stopRequested = false;
 
-        // Uruchom ponownie symulację
-        timer->start(getInterval());
-
+        timer->start(getInterval());     // Uruchom ponownie symulację
     }
 }
 
 void GameOfLife::stop()
 {
     isRunning = false;     // Zakończenie symulacji
-
     timer->stop();         // Zatrzymaj timer
 
-    // Wyświetlenie komunikatu z informacją o liczbie kroków i żywych komórkach
-    QString message = QString("Simulation stopped after %1 steps.\nLiving cells: %2")
+    QString message = QString("Simulation stopped after %1 steps.\nLiving cells: %2")   // Wyświetlenie komunikatu z informacją o liczbie kroków i żywych komórkach
                           .arg(totalSteps)
                           .arg(board.countLivingCells());
-    QMessageBox::information(nullptr, "Simulation Stopped", message);
-}
 
-void GameOfLife::setBoardSize(int width, int height)
-{
-    board.resizeBoard(width, height);
+    QMessageBox::information(nullptr, "Simulation Stopped", message);
 }
 
 void GameOfLife::setRandomSeed(unsigned int seed)
@@ -146,8 +130,8 @@ void GameOfLife::setRandomSeed(unsigned int seed)
     board.clear();
     board.initializeBoardWithSeed(randomSeed);
 
-    int livingCellsCount = board.countLivingCells(); // Oblicz liczbę żywych komórek
-    emit livingCellsCountUpdated(livingCellsCount); // Emituj sygnał z aktualną liczbą żywych komórek
+    int livingCellsCount = board.countLivingCells();        // Oblicz liczbę żywych komórek
+    emit livingCellsCountUpdated(livingCellsCount);         // Emituj sygnał z aktualną liczbą żywych komórek
 }
 
 void GameOfLife::resizeBoard(int width, int height)
@@ -168,12 +152,12 @@ void GameOfLife::clearBoard()
 void GameOfLife::increaseTotalSteps(unsigned int steps)
 {
     totalSteps += steps;
-    emit totalStepsUpdated(totalSteps);  // Emituj sygnał z aktualną liczbą kroków
+    emit totalStepsUpdated(totalSteps);         // Emituj sygnał z aktualną liczbą kroków
 }
 
 
 void GameOfLife::setTotalSteps(int steps)
 {
     totalSteps = steps;
-    emit totalStepsUpdated(totalSteps); // Emituj sygnał o zmianie liczby kroków
+    emit totalStepsUpdated(totalSteps);         // Emituj sygnał o zmianie liczby kroków
 }

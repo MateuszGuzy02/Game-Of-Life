@@ -305,7 +305,13 @@
                </font>
               </property>
               <property name="autoFillBackground">
-               <bool>true</bool>
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLCDNumber { 
+	color: black; 
+	background-color: lightGray; 
+}</string>
               </property>
               <property name="smallDecimalPoint">
                <bool>false</bool>
@@ -363,7 +369,13 @@
                </font>
               </property>
               <property name="autoFillBackground">
-               <bool>true</bool>
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLCDNumber { 
+	color: black; 
+	background-color: lightGray; 
+}</string>
               </property>
               <property name="smallDecimalPoint">
                <bool>false</bool>
@@ -885,7 +897,18 @@
                </font>
               </property>
               <property name="autoFillBackground">
-               <bool>true</bool>
+               <bool>false</bool>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">QLCDNumber::Flat {
+    color: black; 
+    background-color: lightGray;
+    border: 2px solid darkGray; 
+}
+
+QLCDNumber:flat {
+    border: none;
+}</string>
               </property>
               <property name="smallDecimalPoint">
                <bool>false</bool>

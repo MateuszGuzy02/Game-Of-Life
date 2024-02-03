@@ -88,30 +88,18 @@ int Board::countLivingCells() const
     {
         for (int j = 0; j < width; ++j)
         {
-            if (getCell(i, j))  // Jeśli komórka jest żywa
-            {
+            if (getCell(i, j))              // Jeśli komórka jest żywa
                 livingCellsCount++;
-            }
         }
     }
 
     return livingCellsCount;
 }
 
-bool Board::getCell(int x, int y) const
-{
-    return cells[x][y] == 1;
-}
-
-void Board::setCell(int x, int y, bool value)
-{
-    cells[x][y] = value ? 1 : 0;
-}
-
 bool Board::isAlive(const int x, const int y) const
 {
-    const int dx[] = { -1, 0, 1, -1, 1, -1, 0, 1 }; // Przesunięcia w osi x dla sąsiadów
-    const int dy[] = { -1, -1, -1, 0, 0, 1, 1, 1 }; // Przesunięcia w osi y dla sąsiadów
+    const int dx[] = { -1, 0, 1, -1, 1, -1, 0, 1 };     // Przesunięcia w osi x dla sąsiadów
+    const int dy[] = { -1, -1, -1, 0, 0, 1, 1, 1 };     // Przesunięcia w osi y dla sąsiadów
 
     int alive = 0;
 
@@ -152,31 +140,15 @@ void Board::initializeBoardWithSeed(unsigned int seed)
 
 void Board::setCells(std::vector<std::vector<char>>& newCells)
 {
-    if (newCells.size() == static_cast<size_t>(height) &&
-        newCells[0].size() == static_cast<size_t>(width))
+    if (newCells.size() == static_cast<size_t>(height) && newCells[0].size() == static_cast<size_t>(width))
     {
         cells = newCells;
         emit livingCellsCountUpdated(countLivingCells());
     }
 }
 
-void Board::setLiveCellColor(const QColor& color)
-{
-    liveCellColor = color;
-}
-
-
-void Board::setDeadCellColor(const QColor& color)
-{
-    deadCellColor = color;
-}
-
 void Board::toggleCellState(int row, int col)
 {
-    // Sprawdź, czy indeksy są w zakresie
-    if (row >= 0 && row < getHeight() && col >= 0 && col < getWidth())
-    {
-        // Ożyw lub uśmierć komórkę
-        cells[row][col] = (cells[row][col] == 1) ? 0 : 1;
-    }
+    if (row >= 0 && row < getHeight() && col >= 0 && col < getWidth())  // Sprawdź, czy indeksy są w zakresie
+        cells[row][col] = (cells[row][col] == 1) ? 0 : 1;               // Ożyw lub uśmierć komórkę
 }
