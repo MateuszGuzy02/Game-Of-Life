@@ -150,3 +150,13 @@ void Board::initializeBoardWithSeed(unsigned int seed)
             cells[i][j] = dis(gen);                     // Użyj generatora liczb losowych z danym ziarnem
     }
 }
+
+void Board::setCells(std::vector<std::vector<char>>& newCells)
+{
+    if (newCells.size() == static_cast<size_t>(height) &&
+        newCells[0].size() == static_cast<size_t>(width))
+    {
+        cells = newCells;
+        emit livingCellsCountUpdated(countLivingCells());
+    }
+}

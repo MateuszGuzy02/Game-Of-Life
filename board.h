@@ -27,6 +27,7 @@ public:
     bool getCell(int x, int y) const;
     void setCell(int x, int y, bool value);
     const std::vector<std::vector<char>>& getCells() const { return cells; }
+    void setCells(std::vector<std::vector<char>>& newCells);
     void initializeBoard();
     void initializeBoardWithSeed(unsigned int seed);
     void resizeBoard(int newWidth, int newHeight);

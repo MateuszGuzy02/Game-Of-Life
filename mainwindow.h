@@ -5,7 +5,12 @@
 #include <QTableWidgetItem>
 #include <QSpinBox>
 #include <QLCDNumber>
+#include <QAction>
+#include <QFile>
+#include <QFileDialog>
+#include <QTextStream>
 #include "gameoflife.h"
+#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -35,6 +40,9 @@ private slots:
     void on_pauseButton_clicked();
     void on_resumeButton_clicked();
 
+    void saveToFile();
+    void openFromFile();
+
 private:
 
     Ui::MainWindow *ui;
@@ -42,11 +50,12 @@ private:
     QSpinBox *columnBox;
     QSpinBox *rowBox;
     QLCDNumber *speedLCD;
+    QAction *actionSave;
+    QAction *actionOpen;
 
 
     const int initialWidth = 10;
     const int initialHeight = 10;
-
     void setupTable(int width, int height);
     void updateTable();
 

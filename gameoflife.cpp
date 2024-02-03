@@ -6,19 +6,24 @@ GameOfLife::GameOfLife(int width, int height) : board(width, height), isRunning(
 {
     timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &GameOfLife::handleTimerTimeout);
-
+    isLoadingFromFile = false;
     clearBoard();
 }
 
 void GameOfLife::start()
 {
+    if (!isLoadingFromFile) {
+        // Ustawienie interwału timera na wartość getInterval()
+        timer->start(getInterval());
+
+        // Resetowanie totalSteps tylko jeśli nie wczytujesz z pliku
+        totalSteps = 0;
+        emit totalStepsUpdated(totalSteps);
+    }
 
     isRunning = true;
     automaticStep = true;
     stopRequested = false;
-    totalSteps = 0;
-
-    emit totalStepsUpdated(totalSteps);
 
     previousBoardState = board.getCells();
 
@@ -156,4 +161,11 @@ void GameOfLife::increaseTotalSteps(unsigned int steps)
 {
     totalSteps += steps;
     emit totalStepsUpdated(totalSteps);  // Emituj sygnał z aktualną liczbą kroków
+}
+
+
+void GameOfLife::setTotalSteps(int steps)
+{
+    totalSteps = steps;
+    emit totalStepsUpdated(totalSteps); // Emituj sygnał o zmianie liczby kroków
 }

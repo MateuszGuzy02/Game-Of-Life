@@ -17,7 +17,6 @@ signals:
     void boardUpdated();
     void livingCellsCountUpdated(int count);
     void totalStepsUpdated(int steps);
-    void timeUpdated(int elapsedMilliseconds);
 
 private:
     Board board;
@@ -25,7 +24,7 @@ private:
     unsigned int randomSeed;
     bool automaticStep;
     bool stopRequested;
-
+    bool isLoadingFromFile;
     unsigned int totalSteps;
     int interval;
     bool isStepButtonClicked;
@@ -46,7 +45,8 @@ public:
     void setBoardSize(int width, int height);
     void setRandomSeed(unsigned int seed);
     void setInterval(int value) { interval = value; }
-
+    void setIsLoadingFromFile(bool value) { isLoadingFromFile = value; }
+    void setTotalSteps(int steps);
     int getInterval() { return interval; }
     void resizeBoard(int width, int height);
     bool getIsRunning() const { return isRunning; }
