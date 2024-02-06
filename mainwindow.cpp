@@ -46,6 +46,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionSave, &QAction::triggered, this, &MainWindow::saveToFile);
     connect(ui->actionOpen, &QAction::triggered, this, &MainWindow::openFromFile);
 
+    connect(game, &GameOfLife::boardSizeChanged, this, &MainWindow::onBoardSizeChanged);
+    connect(game, &GameOfLife::totalStepsUpdated, this, &MainWindow::updateTotalSteps);
+    connect(game, &GameOfLife::intervalUpdated, this, &MainWindow::updateIntervalLCD);
+
     // Inicjalizacja tabeli
     setupTable(initialWidth, initialHeight);
 }
@@ -79,7 +83,6 @@ void MainWindow::setupTable(int width, int height)
         }
     }
 
-
     updateTable();          // Aktualizacja zawartości tabeli
 }
 
@@ -91,145 +94,27 @@ void MainWindow::updateTable() {
 
 void MainWindow::saveToFile()
 {
-    game->setInterval(ui->speedDial->value());
-    game->setTotalSteps(ui->stepsLCD->value());
-
-    QString filePath = QFileDialog::getSaveFileName(this, tr("Save Game State"), QString(), tr("Text Files (*.txt);;All Files (*)"));
-
-    if (!filePath.isEmpty())
-    {
-        QFile file(filePath);
-        if (file.open(QIODevice::WriteOnly | QIODevice::Text))
-        {
-            QTextStream out(&file);
-
-            out << "Width: " << game->getBoard().getWidth() << "\n";                        // Zapisz szerokość i wysokość planszy
-            out << "Height: " << game->getBoard().getHeight() << "\n";
-
-            out << "TotalSteps: " << game->getTotalSteps() << "\n";                         // Zapisz TotalSteps
-
-
-            out << "Interval: " << game->getInterval() << "\n";                             // Zapisz interwał czasowy
-
-            out << "LiveCellColor: " << game->getBoard().getLiveCellColor().name() << "\n"; // Zapisz kolory komórek
-            out << "DeadCellColor: " << game->getBoard().getDeadCellColor().name() << "\n";
-
-
-            out << "BoardState:\n";             // Zapisz żywe i martwe komórki
-            const auto& cells = game->getBoard().getCells();
-            for (const auto& row : cells)
-            {
-                for (int cell : row)
-                    out << cell << " ";
-                out << "\n";
-            }
-            file.close();
-        }
-        else
-            QMessageBox::critical(this, tr("Error"), tr("Could not save file."));
-    }
+    game->saveToFile();
 }
-
 
 void MainWindow::openFromFile()
 {
-    QString filePath = QFileDialog::getOpenFileName(this, tr("Open Game State"), QString(), tr("Text Files (*.txt);;All Files (*)"));
-
-    if (!filePath.isEmpty())
-    {
-        QFile file(filePath);
-        if (file.open(QIODevice::ReadOnly | QIODevice::Text))
-        {
-            QTextStream in(&file);
-
-            // Wczytaj szerokość i wysokość planszy
-            int width = 0, height = 0, interval = 0, totalSteps = 0;
-            QString line;
-
-            while (!in.atEnd())
-            {
-                line = in.readLine().trimmed();
-                if (line.isEmpty())
-                    continue;
-
-                QStringList tokens = line.split(":");
-                if (tokens.size() != 2)
-                    continue;
-
-                QString key = tokens[0].trimmed();
-                QString value = tokens[1].trimmed();
-
-                if (key == "Width")
-                {
-                    width = value.toInt();
-                    ui->rowBox->setValue(width);
-                }
-                else if (key == "Height")
-                {
-                    height = value.toInt();
-                    ui->columnBox->setValue(height);
-                }
-                else if (key == "TotalSteps")
-                {
-                    totalSteps = value.toInt();
-                    game->setTotalSteps(totalSteps);
-                }
-                else if (key == "Interval")
-                {
-                    interval = value.toInt();
-
-                    game->resizeBoard(width, height);
-                    game->setInterval(interval);
-
-                    game->setIsLoadingFromFile(true);               // Ustaw flagę isLoadingFromFile przed wywołaniem start()
-
-                    updateTable();
-                    ui->speedDial->setValue(game->getInterval());
-                }
-                else if (key == "LiveCellColor")
-                {
-                    QColor liveCellColor(value);
-                    game->getBoard().setLiveCellColor(liveCellColor);
-                }
-                else if (key == "DeadCellColor")
-                {
-                    QColor deadCellColor(value);
-                    game->getBoard().setDeadCellColor(deadCellColor);
-                }
-                else if (key == "BoardState")
-                {
-                    std::vector<std::vector<char>> cells;
-                    for (int i = 0; i < height; ++i)
-                    {
-                        line = in.readLine().trimmed();
-                        QStringList cellValues = line.split(" ", Qt::SkipEmptyParts);
-                        std::vector<char> row;
-                        for (const QString& cellValue : cellValues)
-                        {
-                            row.push_back(cellValue.toInt());
-                        }
-                        cells.push_back(row);
-                    }
-
-
-                    game->getBoard().setCells(cells);   // Ustaw komórki na planszy
-                    updateTable();                      // Dodaj tę linijkę, aby od razu zaktualizować planszę po wczytaniu danych
-
-                    break;                              // Zakończ pętlę, ponieważ już wczytaliśmy komórki planszy
-                }
-            }
-
-            ui->startButton->setEnabled(true);
-            file.close();
-        }
-        else
-        {
-            QMessageBox::critical(this, tr("Error"), tr("Could not open file."));
-        }
-    }
+    game->openFromFile();
+    ui->startButton->setEnabled(true);
+    ui->stepButton->setEnabled(true);
+    updateTable();
 }
 
+void MainWindow::onBoardSizeChanged(int height, int width)
+{
+    ui->rowBox->setValue(height);
+    ui->columnBox->setValue(width);
+}
 
+void MainWindow::updateTotalSteps(int steps)
+{
+    ui->stepsLCD->display(steps);
+}
 
 
 void MainWindow::on_actionColorLivingCells_triggered()
@@ -370,4 +255,15 @@ void MainWindow::updateTotalStepsLCD(int steps)
     ui->stepsLCD->display(steps);           // Ustaw wartość QLCDNumber na aktualną liczbę kroków
 }
 
+void MainWindow::updateIntervalLCD(int interval)
+{
+    ui->speedLCD->display(interval);        // Ustaw wartość QLCDNumber na aktualny interwał
+    ui->speedDial->setValue(interval);
+}
+
+void MainWindow::on_speedDial_sliderReleased()
+{
+    int value = ui->speedDial->value();
+    game->setInterval(value);
+}
 

@@ -53,7 +53,11 @@ private slots:
     void on_actionColorLivingCells_triggered();
     void on_actionColor_of_dead_cells_triggered();
 
+    void onBoardSizeChanged(int height, int width);
+    void updateTotalSteps(int steps);
+    void updateIntervalLCD(int interval);
 
+    void on_speedDial_sliderReleased();
 
 private:
     Ui::MainWindow *ui;

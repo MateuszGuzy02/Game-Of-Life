@@ -956,6 +956,9 @@ QLCDNumber:flat {
             <property name="value">
              <number>50</number>
             </property>
+            <property name="tracking">
+             <bool>true</bool>
+            </property>
             <property name="wrapping">
              <bool>false</bool>
             </property>

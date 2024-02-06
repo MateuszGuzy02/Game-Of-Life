@@ -5,6 +5,10 @@
 #include <QTableWidgetItem>
 #include <QMessageBox>
 #include <QTimer>
+#include <QFile>
+#include <QFileDialog>
+#include <QTextStream>
+#include <QDebug>
 
 class GameOfLife: public QObject
 {
@@ -14,6 +18,8 @@ signals:
     void boardUpdated();
     void livingCellsCountUpdated(int count);
     void totalStepsUpdated(int steps);
+    void boardSizeChanged(int height, int width);
+    void intervalUpdated(int interval);
 
 private:
     Board board;
@@ -25,6 +31,7 @@ private:
     bool stopRequested;
     bool isLoadingFromFile;
     bool isStepButtonClicked;
+
     int interval;
     unsigned int randomSeed;
     unsigned int totalSteps;
@@ -34,7 +41,7 @@ public:
 
     void setBoardSize(int width, int height) { board.resizeBoard(width, height); }
     void setRandomSeed(unsigned int seed);
-    void setInterval(int value) { interval = value; }
+    void setInterval(int value);
     void setIsLoadingFromFile(bool value) { isLoadingFromFile = value; }
     void setTotalSteps(int steps);
 
@@ -54,6 +61,9 @@ public:
     void handleTimerTimeout();
     void resizeBoard(int width, int height);
     void increaseTotalSteps(unsigned int steps = 1);
+
+    void saveToFile();
+    void openFromFile();
 
 };
 #endif // GAMEOFLIFE_H
