@@ -269,11 +269,11 @@ void GameOfLife::openFromFile()
                         cells.push_back(row);
                     }
 
-                    board.resizeBoard(width, height); // Zmiana rozmiaru planszy przed ustawieniem komórek
-                    board.setCells(cells);             // Ustaw komórki na planszy
-                    emit boardUpdated();               // Emituj sygnał aktualizacji planszy
+                    board.resizeBoard(width, height);   // Zmiana rozmiaru planszy przed ustawieniem komórek
+                    board.setCells(cells);              // Ustaw komórki na planszy
+                    emit boardUpdated();                // Emituj sygnał aktualizacji planszy
 
-                    break;                             // Zakończ pętlę, ponieważ już wczytaliśmy komórki planszy
+                    break;                              // Zakończ pętlę, ponieważ już wczytaliśmy komórki planszy
                 }
             }
 
