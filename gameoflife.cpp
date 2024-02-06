@@ -69,7 +69,6 @@ void GameOfLife::handleTimerTimeout()
     }
     else
         timer->stop();
-
 }
 
 void GameOfLife::step()
@@ -139,7 +138,6 @@ void GameOfLife::resizeBoard(int width, int height)
     board.resizeBoard(width, height);
 }
 
-
 void GameOfLife::clearBoard()
 {
     board.clear();
@@ -155,16 +153,10 @@ void GameOfLife::increaseTotalSteps(unsigned int steps)
     emit totalStepsUpdated(totalSteps);         // Emituj sygnał z aktualną liczbą kroków
 }
 
-
 void GameOfLife::setTotalSteps(int steps)
 {
     totalSteps = steps;
     emit totalStepsUpdated(totalSteps);         // Emituj sygnał o zmianie liczby kroków
-}
-
-void GameOfLife::setInterval(int value)
-{
-    interval = value;
 }
 
 void GameOfLife::saveToFile()

@@ -41,7 +41,7 @@ public:
 
     void setBoardSize(int width, int height) { board.resizeBoard(width, height); }
     void setRandomSeed(unsigned int seed);
-    void setInterval(int value);
+    void setInterval(int value) { interval = value; }
     void setIsLoadingFromFile(bool value) { isLoadingFromFile = value; }
     void setTotalSteps(int steps);
 

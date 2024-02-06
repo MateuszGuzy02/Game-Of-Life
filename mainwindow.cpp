@@ -91,7 +91,6 @@ void MainWindow::updateTable() {
     ui->gameTable->viewport()->update();
 }
 
-
 void MainWindow::saveToFile()
 {
     game->saveToFile();
@@ -115,7 +114,6 @@ void MainWindow::updateTotalSteps(int steps)
 {
     ui->stepsLCD->display(steps);
 }
-
 
 void MainWindow::on_actionColorLivingCells_triggered()
 {
@@ -189,7 +187,6 @@ void MainWindow::on_pauseButton_clicked()
     ui->resumeButton->setEnabled(true);
 }
 
-
 void MainWindow::on_resumeButton_clicked()
 {
     game->resume();
@@ -218,7 +215,6 @@ void MainWindow::on_columnBox_valueChanged(int newHeight)
     updateTable();
 }
 
-
 void MainWindow::on_setSeedBox_valueChanged(int seed)
 {
     game->setRandomSeed(static_cast<unsigned int>(seed));
@@ -228,7 +224,6 @@ void MainWindow::on_setSeedBox_valueChanged(int seed)
     updateTable();
 }
 
-
 void MainWindow::on_randomButton_clicked()
 {
     game->getBoard().initializeBoard();
@@ -237,7 +232,6 @@ void MainWindow::on_randomButton_clicked()
     ui->clearButton->setEnabled(true);
     updateTable();
 }
-
 
 void MainWindow::on_clearButton_clicked()
 {
