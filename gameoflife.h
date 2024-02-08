@@ -1,16 +1,16 @@
 #ifndef GAMEOFLIFE_H
 #define GAMEOFLIFE_H
-#include "board.h"
-#include <QObject>
-#include <QTableWidgetItem>
-#include <QMessageBox>
-#include <QTimer>
+#include <QDebug>
 #include <QFile>
 #include <QFileDialog>
+#include <QMessageBox>
+#include <QObject>
+#include <QTableWidgetItem>
 #include <QTextStream>
-#include <QDebug>
+#include <QTimer>
+#include "board.h"
 
-class GameOfLife: public QObject
+class GameOfLife : public QObject
 {
     Q_OBJECT
 
@@ -48,8 +48,7 @@ public:
     int getTotalSteps() const { return totalSteps; }
     int getInterval() { return interval; }
     bool getIsRunning() const { return isRunning; }
-    Board& getBoard() { return board; }
-
+    Board &getBoard() { return board; }
 
     void start();
     void stop();
@@ -64,6 +63,5 @@ public:
 
     void saveToFile();
     void openFromFile();
-
 };
 #endif // GAMEOFLIFE_H

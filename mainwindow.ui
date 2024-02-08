@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1056</width>
-    <height>902</height>
+    <height>936</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,7 +39,7 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_11">
               <item>
-               <widget class="QLabel" name="label_4">
+               <widget class="QLabel" name="columnsLabel">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -156,7 +156,7 @@
                </spacer>
               </item>
               <item>
-               <widget class="QLabel" name="label_5">
+               <widget class="QLabel" name="rowsLabel">
                 <property name="minimumSize">
                  <size>
                   <width>0</width>
@@ -262,7 +262,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_8">
             <item>
-             <widget class="QLabel" name="label_3">
+             <widget class="QLabel" name="stepsLabel">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -326,7 +326,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_9">
             <item>
-             <widget class="QLabel" name="label_2">
+             <widget class="QLabel" name="lifeLabel">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -758,7 +758,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_14">
             <item>
-             <widget class="QLabel" name="label_6">
+             <widget class="QLabel" name="seedLabel">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                 <horstretch>0</horstretch>
@@ -860,7 +860,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_7">
             <item>
-             <widget class="QLabel" name="label">
+             <widget class="QLabel" name="speedLabel">
               <property name="font">
                <font>
                 <pointsize>10</pointsize>
